@@ -4,6 +4,7 @@
     <title>Admin Panel</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
 
     <style>
@@ -13,7 +14,6 @@
     background:#f8fafc;
     font-family:'Inter',sans-serif;
 }
-
 
 .page-card{
     background:#fff;
@@ -88,7 +88,7 @@
 
 .sidebar-logo{
     background:#ffffe0;
-    padding:15px 10px;
+    padding:1px 10px;
     text-align:center;
 }
 
@@ -137,6 +137,29 @@
 .sidebar a.active{
     background:#2563eb;
     color:white;
+}
+
+.sidebar-dropdown{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    color:#d1d5db;
+    text-decoration:none;
+    padding:14px 20px;
+    margin:4px 12px;
+    border-radius:12px;
+    transition:.3s;
+    font-size:15px;
+    font-weight:500;
+}
+
+.sidebar-dropdown:hover{
+    background:#1f2937;
+    color:#fff;
+}
+
+.sidebar-dropdown i:last-child{
+    font-size:12px;
 }
 
 .logout{
@@ -391,6 +414,56 @@
 
 }
 
+.menu-heading{
+    color:#94a3b8;
+    font-size:11px;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    padding:18px 22px 8px;
+}
+
+/* Laptop Management */
+
+.laptop-submenu{
+    margin-left:18px;
+    border-left:2px solid rgba(255,255,255,.12);
+    padding-left:8px;
+    margin-top:6px;
+}
+
+.laptop-submenu a{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:10px 14px;
+    margin:4px 0;
+    color:#cfd6e4;
+    text-decoration:none;
+    border-radius:8px;
+    transition:.25s;
+    font-size:14px;
+}
+
+.laptop-submenu a:hover{
+    background:#2563eb;
+    color:#fff;
+    padding-left:18px;
+}
+
+.laptop-submenu a i{
+    width:18px;
+    text-align:center;
+}
+
+.menu-arrow{
+    transition:transform .3s ease;
+    font-size:12px;
+}
+
+.sidebar-dropdown[aria-expanded="true"] .menu-arrow{
+    transform:rotate(180deg);
+}
     </style>
 
 </head>
@@ -401,44 +474,154 @@
 
     <div class="sidebar-logo">
         <img src="/images/bacbpl-logo.png" class="sidebar-brand-logo">
-         <h4 class="sidebar-title">
-        Admin Panel
-    </h4>
     </div>
 
     <div class="menu">
 
-        <a href="/admin/dashboard">Dashboard</a>
+        <div class="menu-heading">MAIN</div>
 
-        <a href="/admin/categories">Categories</a>
+        <a href="/admin/dashboard"
+            class="{{ request()->is('admin/dashboard') ? 'active' : '' }}">
+            <i class="bi bi-grid-fill me-2"></i>
+            Dashboard
+        </a>
 
-        <a href="/admin/subcategories">Sub Categories</a>
+        <div class="menu-heading">BUSINESS</div>
 
-        <a href="/admin/services">Services</a>
+        <a href="/admin/categories"
+            class="{{ request()->is('admin/categories*') ? 'active' : '' }}">
+            <i class="bi bi-folder2-open me-2"></i>
+            Categories
+        </a>
 
-        <a href="/admin/skills">Skills</a>
+        <a href="/admin/subcategories"
+            class="{{ request()->is('admin/subcategories*') ? 'active' : '' }}">
+            <i class="bi bi-diagram-3 me-2"></i>
+            Sub Categories
+        </a>
 
-        <a href="/admin/banners">Banners</a>
+        <a href="/admin/services"
+            class="{{ request()->is('admin/services*') ? 'active' : '' }}">
+            <i class="bi bi-tools me-2"></i>
+            Services
+        </a>
 
-        <a href="/admin/providers">Engineers</a>
+        <p class="menu-heading mt-4">
+    LAPTOP MANAGEMENT
+</p>
 
-        <a href="/admin/provider-services">Engineer Services</a>
+    <a
+        class="d-flex justify-content-between align-items-center sidebar-dropdown"
+        data-bs-toggle="collapse"
+        href="#laptopMenu"
+        role="button"
+        aria-expanded="{{ request()->is('admin/laptop-*') ? 'true' : 'false' }}">
 
-        <a href="/admin/bookings">Bookings</a>
+    <span>
+        <i class="bi bi-laptop"></i>
+        Laptop Management
+    </span>
 
-        <a href="/admin/users">Users</a>
+    <i class="bi bi-chevron-down menu-arrow"></i>
 
-        <a href="/admin/reviews">Reviews</a>
+</a>
 
-        <a href="/admin/payments">Payments</a>
+    <div class="collapse {{ request()->is('admin/laptop-*') ? 'show' : '' }} laptop-submenu"
+     id="laptopMenu">
+
+        <a href="/admin/laptop-service-categories"
+        class="ps-5">
+
+            <i class="bi bi-tags me-2"></i>
+            Laptop Service Categories
+
+        </a>
+
+        <a href="/admin/laptop-brands"
+        class="ps-5">
+
+            <i class="bi bi-pc-display me-2"></i>
+            Laptop Brands
+
+        </a>
+
+        <a href="/admin/laptop-models"
+        class="ps-5">
+
+            <i class="bi bi-laptop me-2"></i>
+            Laptop Models
+
+        </a>
+
+        <a href="/admin/laptop-services"
+        class="ps-5">
+
+            <i class="bi bi-tools me-2"></i>
+            Laptop Services
+
+        </a>
 
     </div>
 
-    <div class="logout">
-        <a href="/admin/logout">Logout</a>
-    </div>
+        <a href="/admin/skills"
+            class="{{ request()->is('admin/skills*') ? 'active' : '' }}">
+            <i class="bi bi-award me-2"></i>
+            Skills
+        </a>
 
-</div>
+        <div class="menu-heading">ENGINEERS</div>
+
+        <a href="/admin/providers"
+            class="{{ request()->is('admin/providers*') ? 'active' : '' }}">
+            <i class="bi bi-person-workspace me-2"></i>
+            Engineers
+        </a>
+
+        <a href="/admin/provider-services"
+            class="{{ request()->is('admin/provider-services*') ? 'active' : '' }}">
+            <i class="bi bi-link-45deg me-2"></i>
+            Engineer Services
+        </a>
+
+        <div class="menu-heading">OPERATIONS</div>
+
+        <a href="/admin/bookings"
+            class="{{ request()->is('admin/bookings*') ? 'active' : '' }}">
+            <i class="bi bi-calendar-check me-2"></i>
+            Bookings
+        </a>
+
+        <a href="/admin/users"
+            class="{{ request()->is('admin/users*') ? 'active' : '' }}">
+            <i class="bi bi-people me-2"></i>
+            Users
+        </a>
+
+        <a href="/admin/reviews"
+            class="{{ request()->is('admin/reviews*') ? 'active' : '' }}">
+            <i class="bi bi-star me-2"></i>
+            Reviews
+        </a>
+
+        <a href="/admin/payments">
+            <i class="bi bi-credit-card me-2"></i>
+            Payments
+        </a>
+
+        <div class="menu-heading">CMS</div>
+
+        <a href="/admin/banners"
+            class="{{ request()->is('admin/banners*') ? 'active' : '' }}">
+            <i class="bi bi-images me-2"></i>
+            Banners
+        </a>
+
+    </div>
+        <div class="logout">
+            <a href="/admin/logout">Logout</a>
+        </div>
+
+    </div>
 
 <div class="content">
 

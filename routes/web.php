@@ -14,6 +14,10 @@ use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\SkillController;
+use App\Http\Controllers\LaptopServiceController;
+use App\Http\Controllers\LaptopServiceCategoryController;
+use App\Http\Controllers\LaptopBrandController;
+use App\Http\Controllers\LaptopModelController;
 
 Route::get('/admin', function () {
     return redirect('/admin/login');
@@ -49,6 +53,24 @@ Route::post('/admin/services/store', [ServiceController::class, 'storeService'])
 Route::get('/admin/services/edit/{id}', [ServiceController::class, 'editService']);
 Route::post('/admin/services/update/{id}', [ServiceController::class, 'updateService']);
 Route::get('/admin/services/delete/{id}', [ServiceController::class, 'deleteService']);
+
+// Laptop Services
+Route::get('/admin/laptop-services', [LaptopServiceController::class, 'index']);
+Route::get('/admin/laptop-services/create', [LaptopServiceController::class, 'create']);
+Route::post('/admin/laptop-services/store', [LaptopServiceController::class, 'store']);
+Route::get('/admin/laptop-service-categories', [LaptopServiceCategoryController::class, 'index']);
+Route::get('/admin/laptop-service-categories/create', [LaptopServiceCategoryController::class, 'create']);
+Route::post('/admin/laptop-service-categories/store', [LaptopServiceCategoryController::class, 'store']);
+
+// Laptop Brands
+Route::get('/admin/laptop-brands', [LaptopBrandController::class, 'index']);
+Route::get('/admin/laptop-brands/create', [LaptopBrandController::class, 'create']);
+Route::post('/admin/laptop-brands/store', [LaptopBrandController::class, 'store']);
+
+// Laptop Models
+Route::get('/admin/laptop-models', [LaptopModelController::class, 'index']);
+Route::get('/admin/laptop-models/create', [LaptopModelController::class, 'create']);
+Route::post('/admin/laptop-models/store', [LaptopModelController::class, 'store']);
 
 // Providers
 Route::get('/admin/providers', [ProviderController::class, 'providers']);

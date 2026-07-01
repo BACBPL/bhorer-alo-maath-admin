@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\ServiceProvider;
 use App\Models\Service;
 use App\Models\ProviderService;
+use App\Models\LaptopService;
 
 class ProviderServiceController extends Controller
 {
@@ -25,15 +26,21 @@ class ProviderServiceController extends Controller
 
 public function createProviderService()
 {
-    $providers = ServiceProvider::all();
+    $providers = ServiceProvider::where('status', 'Active')->get();
 
-    $services = Service::all();
+    $laptopServices = LaptopService::with([
+        'laptopServiceCategory',
+        'laptopBrand',
+        'laptopModel'
+    ])
+    ->where('status', 'Active')
+    ->get();
 
     return view(
         'admin.provider_services.create',
         compact(
             'providers',
-            'services'
+            'laptopServices'
         )
     );
 }

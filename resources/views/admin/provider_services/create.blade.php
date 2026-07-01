@@ -180,7 +180,7 @@ method="POST"
 
             <div class="premium-multi">
 
-                @foreach($services as $service)
+                @foreach($laptopServices as $service)
 
                 <div class="service-box">
 
@@ -191,27 +191,48 @@ method="POST"
                             type="checkbox"
                             name="service_ids[]"
                             value="{{ $service->id }}"
-                            id="service{{ $service->id }}"
-                        >
+                            id="service{{ $service->id }}">
 
-                        <label
-                            class="form-check-label w-100"
-                            for="service{{ $service->id }}"
-                        >
+                        <label class="form-check-label w-100"
+                            for="service{{ $service->id }}">
 
-                            <strong>
-
+                            <h6 class="mb-1">
                                 {{ $service->service_name }}
+                            </h6>
 
-                            </strong>
+                            <small class="text-muted d-block">
 
-                            <br>
+                        {{ $service->laptopServiceCategory->category_name ?? 'Laptop Service' }}
 
-                            <small class="text-muted">
+                    </small>
 
-                                ₹{{ number_format($service->price,2) }}
+                    @if($service->laptopBrand)
 
-                            </small>
+                    <small class="text-secondary d-block">
+
+                        Brand :
+                        {{ $service->laptopBrand->brand_name }}
+
+                    </small>
+
+                    @endif
+
+                    @if($service->laptopModel)
+
+                    <small class="text-secondary d-block">
+
+                        Model :
+                        {{ $service->laptopModel->model_name }}
+
+                    </small>
+
+                    @endif
+
+                    <span class="text-success fw-bold">
+
+                        ₹{{ number_format($service->price,2) }}
+
+                    </span>
 
                         </label>
 
@@ -243,7 +264,7 @@ method="POST"
 
                 <strong>Total Services:</strong>
 
-                {{ $services->count() }}
+                {{ $laptopServices->count() }}
 
             </div>
 

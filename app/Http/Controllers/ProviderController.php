@@ -7,6 +7,7 @@ use App\Models\ServiceProvider;
 use App\Models\Skill;
 use App\Models\PincodeMaster;
 use Illuminate\Support\Facades\DB;
+use App\Models\LaptopService;
 
 class ProviderController extends Controller
 {
@@ -28,9 +29,12 @@ public function createProvider()
         ->orderBy('state')
         ->pluck('state');
 
+    $laptopServices = LaptopService::where('status', 'Active')->get();
+
     return view('admin.providers.create', compact(
         'skills',
-        'states'
+        'states',
+        'laptopServices'
     ));
 }
 
@@ -43,49 +47,29 @@ $employeeCode = 'ENG' . str_pad($lastId, 4, '0', STR_PAD_LEFT);
    $provider = ServiceProvider::create([
 
     'branch_id' => $request->branch_id,
-
     'engineer_code' => $employeeCode,
-
     'name' => $request->name,
-
     'email' => $request->email,
-
     'mobile' => $request->mobile,
-
     'password' => $request->password,
-
     'age' => $request->age,
     'state' => $request->state,
-
     'city' => $request->city,
-
-'current_pincode' => $request->current_pincode,
-
-'service_radius' => $request->service_radius,
-
-'serviceable_pincodes' => !empty($request->serviceable_pincodes)
-    ? implode(',', $request->serviceable_pincodes)
-    : null,
-
-'provider_type' => $request->provider_type,
-
+    'current_pincode' => $request->current_pincode,
+    'service_radius' => $request->service_radius,
+    'serviceable_pincodes' => !empty($request->serviceable_pincodes)
+        ? implode(',', $request->serviceable_pincodes)
+        : null,
+    'provider_type' => $request->provider_type,
     'experience' => $request->experience,
-
     'address' => $request->address,
-     'aadhaar_number' => $request->aadhaar_number,
-
+    'aadhaar_number' => $request->aadhaar_number,
     'pan_number' => $request->pan_number,
-
     'driving_license_number' => $request->driving_license_number,
-
     'bank_name' => $request->bank_name,
-
     'account_holder_name' => $request->account_holder_name,
-
     'account_number' => $request->account_number,
-
     'ifsc_code' => $request->ifsc_code,
-
     'status' => $request->status
 
 ]);

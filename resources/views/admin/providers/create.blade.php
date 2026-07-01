@@ -58,7 +58,7 @@
                         </button>
 
                     </li>
-
+                    
                     <li class="nav-item me-2">
 
                         <button type="button"
@@ -256,7 +256,7 @@
 
                 </div>
 
-                <!-- ================================================= -->
+<!-- ================================================= -->
 <!-- ENGINEER LOCATION TAB -->
 <!-- ================================================= -->
 
@@ -644,7 +644,6 @@
 
 </div>
 
-
 <script>
 
     function showTab(tabName) {
@@ -827,6 +826,17 @@ $('#serviceable_pincodes').select2({
 
         margin-right: 8px;
 
+    }
+
+    .service-card{
+        transition:.25s ease;
+        cursor:pointer;
+    }
+
+    .service-card:hover{
+        border-color:#2563eb !important;
+        box-shadow:0 8px 20px rgba(37,99,235,.15);
+        transform:translateY(-2px);
     }
 
 </style>
