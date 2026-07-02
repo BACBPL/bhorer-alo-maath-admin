@@ -68,9 +68,7 @@
                     <tr>
                         <th width="70">S.No</th>
                         <th>Engineer</th>
-                        <th>Email</th>
                         <th>Mobile</th>
-                        <th>Experience</th>
                         <th>Type</th>
                         <th>Status</th>
                         <th width="170">Action</th>
@@ -91,11 +89,7 @@
                             </div>
                         </td>
 
-                        <td>{{ $provider->email }}</td>
-
                         <td>{{ $provider->mobile }}</td>
-
-                        <td>{{ $provider->experience }}</td>
 
                         <td>
                             @if($provider->provider_type=='Internal')
@@ -117,6 +111,11 @@
                             <a href="{{ url('/admin/providers/edit/'.$provider->id) }}" class="btn btn-sm btn-warning rounded-pill px-3">
                                 Edit
                             </a>
+
+                               <a href="{{ url('/admin/providers/'.$provider->id.'/services') }}"
+                                class="btn btn-info btn-sm">
+                                    <i class="fas fa-eye"></i> View
+                                </a>
 
                             <a href="{{ url('/admin/providers/delete/'.$provider->id) }}"
                                onclick="return confirm('Delete this engineer?')"

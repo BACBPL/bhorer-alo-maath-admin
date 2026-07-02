@@ -81,6 +81,7 @@ Route::post('/admin/providers/update/{id}', [ProviderController::class, 'updateP
 Route::get('/admin/providers/delete/{id}', [ProviderController::class, 'deleteProvider']);
 Route::get('/admin/pincode/search', [ProviderController::class, 'searchPincode']);
 Route::get('/admin/pincode/details', [ProviderController::class, 'getPincodeDetails']);
+Route::get('/admin/providers/{id}/services', [ProviderController::class, 'viewServices']);
 
 // Skills
 Route::get('/admin/skills', [SkillController::class, 'index']);
