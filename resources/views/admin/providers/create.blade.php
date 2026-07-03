@@ -261,6 +261,41 @@
 
                     </div>
 
+                    <!-- ============================================= -->
+<!-- Laptop Services -->
+<!-- ============================================= -->
+
+<hr class="my-5">
+
+<div class="col-12">
+
+    <label class="form-label fw-semibold">
+        Assign Services
+    </label>
+
+    <select
+        name="laptop_services[]"
+        class="form-control multi-laptop-services"
+        multiple>
+
+        @foreach($laptopServices as $service)
+            <option value="{{ $service->id }}">
+                {{ $service->service_name }}
+            </option>
+        @endforeach
+
+    </select>
+
+</div>
+
+    <div class="alert alert-info mt-4">
+
+        <strong>Note:</strong>
+
+        All uploaded documents will be verified by the admin before engineer approval.
+
+    </div>
+
                     <!-- Next Button -->
 
                     <div class="mt-5 text-end">
@@ -632,144 +667,6 @@
 
     </div>
 
-    <!-- ============================================= -->
-<!-- Skills -->
-<!-- ============================================= -->
-
-<hr class="my-5">
-
-<div class="col-12">
-
-    <h4 class="fw-bold text-primary mb-4">
-        Engineer Skills
-    </h4>
-
-</div>
-
-<div class="col-12">
-
-    <label class="form-label fw-semibold">
-        Select Skills
-    </label>
-
-    <select
-        name="skills[]"
-        class="form-control multi-skills"
-        multiple>
-
-        @foreach($skills as $skill)
-
-            <option value="{{ $skill->id }}">
-
-                {{ $skill->skill_name }}
-
-            </option>
-
-        @endforeach
-
-    </select>
-
-    <small class="text-muted">
-        You can select multiple skills.
-    </small>
-
-</div>
-
-<!-- ============================================= -->
-<!-- Laptop Services -->
-<!-- ============================================= -->
-
-<hr class="my-5">
-
-<div class="col-12">
-
-    <h4 class="fw-bold text-primary mb-4">
-        Assign Services
-    </h4>
-
-</div>
-
-@foreach($laptopServices as $service)
-
-<div class="col-md-6">
-
-    <div class="card border service-card">
-
-        <div class="card-body">
-
-            <div class="form-check">
-
-                <input
-                    class="form-check-input"
-                    type="checkbox"
-                    name="laptop_services[]"
-                    value="{{ $service->id }}"
-                    id="service{{ $service->id }}">
-
-                <label
-                    class="form-check-label w-100"
-                    for="service{{ $service->id }}">
-
-                    <h6 class="mb-1">
-
-                        {{ $service->service_name }}
-
-                    </h6>
-
-                    <small class="text-muted d-block">
-
-                        {{ $service->laptopServiceCategory->category_name ?? '' }}
-
-                    </small>
-
-                    @if($service->laptopBrand)
-
-                        <small class="d-block">
-
-                            Brand :
-                            {{ $service->laptopBrand->brand_name }}
-
-                        </small>
-
-                    @endif
-
-                    @if($service->laptopModel)
-
-                        <small class="d-block">
-
-                            Model :
-                            {{ $service->laptopModel->model_name }}
-
-                        </small>
-
-                    @endif
-
-                    <strong class="text-success">
-
-                        ₹{{ number_format($service->price,2) }}
-
-                    </strong>
-
-                </label>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</div>
-
-@endforeach
-
-    <div class="alert alert-info mt-4">
-
-        <strong>Note:</strong>
-
-        All uploaded documents will be verified by the admin before engineer approval.
-
-    </div>
-
     <!-- Navigation -->
 
     <div class="d-flex justify-content-between mt-5">
@@ -829,6 +726,13 @@
             allowClear: true,
             width: '100%'
 
+        });
+
+        $('.multi-laptop-services').select2({
+
+            placeholder: 'Select Laptop Services',
+            allowClear: true,
+            width: '100%'
         });
 
         // Current Pincode

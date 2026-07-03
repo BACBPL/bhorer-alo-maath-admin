@@ -153,6 +153,13 @@ public function editProvider($id)
     );
 }
 
+public function viewProvider($id)
+{
+    $provider = ServiceProvider::with('laptopServices')->findOrFail($id);
+
+    return view('admin.providers.view', compact('provider'));
+}
+
 public function searchPincode(Request $request)
 {
     $search = $request->search;
@@ -253,12 +260,12 @@ public function deleteProvider($id)
 public function viewServices($id)
 {
     $provider = ServiceProvider::with([
-        'skills',
-        'laptopServices.laptopServiceCategory',
-        'laptopServices.laptopBrand',
-        'laptopServices.laptopModel'
+        'laptopServices'
     ])->findOrFail($id);
 
-    return view('admin.providers.view_services', compact('provider'));
+    return view(
+        'admin.providers.view_services',
+        compact('provider')
+    );
 }
 }

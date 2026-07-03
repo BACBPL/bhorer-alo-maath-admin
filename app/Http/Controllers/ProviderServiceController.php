@@ -7,20 +7,26 @@ use App\Models\ServiceProvider;
 use App\Models\Service;
 use App\Models\ProviderService;
 use App\Models\LaptopService;
+use App\Models\ProviderLaptopService;
 
 class ProviderServiceController extends Controller
 {
-        public function providerServices()
+    public function providerServices()
 {
-    $providerServices = ProviderService::with([
-        'provider',
-        'service'
-    ])->get()
-      ->groupBy('provider_id');
+    $providers = ServiceProvider::with('laptopServices')
+    ->where('status', 'Active')
+    ->get();
+
+    $laptopServices = LaptopService::where('status', 'Active')
+        ->orderBy('service_name')
+        ->get();
 
     return view(
         'admin.provider_services.index',
-        compact('providerServices')
+        compact(
+            'providers',
+            'laptopServices'
+        )
     );
 }
 
@@ -47,16 +53,21 @@ public function createProviderService()
 
 public function storeProviderService(Request $request)
 {
+    $request->validate([
+        'provider_id'      => 'required',
+        'laptop_services'  => 'required|array|min:1',
+    ]);
 
-    foreach ($request->service_ids as $serviceId)
+    foreach ($request->laptop_services as $serviceId)
     {
-        ProviderService::firstOrCreate([
+        ProviderLaptopService::firstOrCreate([
             'provider_id' => $request->provider_id,
-            'service_id'  => $serviceId
+            'laptop_service_id' => $serviceId
         ]);
     }
 
-    return redirect('/admin/provider-services');
+    return redirect('/admin/provider-services')
+            ->with('success','Services Assigned Successfully');
 }
 
 public function editProviderService($id)

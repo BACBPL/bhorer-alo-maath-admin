@@ -222,15 +222,6 @@
 
     </div>
 
-    <a href="{{ url('/admin/provider-services/create') }}"
-       class="assign-btn">
-
-        <i class="fa fa-plus me-2"></i>
-
-        Assign Service
-
-    </a>
-
 </div>
 
 <div class="row mt-4">
@@ -247,8 +238,7 @@
 
                 <h2 class="fw-bold mt-2">
 
-                    {{ $providerServices->count() }}
-
+                    {{ $providers->count() }}
                 </h2>
 
             </div>
@@ -270,7 +260,9 @@
                 <h2 class="fw-bold text-primary mt-2">
 
                     {{
-                        $providerServices->flatten()->count()
+                        $providers->sum(function($provider){
+                            return $provider->laptopServices->count();
+                        })
                     }}
 
                 </h2>
@@ -294,11 +286,11 @@
                 <h2 class="fw-bold text-success mt-2">
 
                     {{
-                        $providerServices->count()
+                        $providers->count()
                         ? round(
-                            $providerServices->flatten()->count()
-                            /
-                            $providerServices->count(),
+                            $providers->sum(function($provider){
+                                return $provider->laptopServices->count();
+                            }) / $providers->count(),
                             1
                         )
                         : 0
@@ -336,6 +328,107 @@
             </div>
 
         </div>
+
+    </div>
+
+</div>
+
+<div class="card border-0 shadow-sm rounded-4 mt-4">
+
+    <div class="card-header bg-primary text-white">
+
+        <h5 class="mb-0">
+
+            Assign Laptop Services
+
+        </h5>
+
+    </div>
+
+    <div class="card-body">
+
+        <form action="{{ url('/admin/provider-services/store') }}" method="POST">
+
+            @csrf
+
+            <div class="row">
+
+                <div class="col-md-4">
+
+                    <label class="form-label">
+
+                        Engineer
+
+                    </label>
+
+                    <select
+                        name="provider_id"
+                        class="form-select"
+                        required>
+
+                        <option value="">
+
+                            Select Engineer
+
+                        </option>
+
+                        @foreach($providers as $provider)
+
+                            <option value="{{ $provider->id }}">
+
+                                {{ $provider->name }}
+
+                            </option>
+
+                        @endforeach
+
+                    </select>
+
+                </div>
+
+                <div class="col-md-6">
+
+                    <label class="form-label">
+
+                        Laptop Services
+
+                    </label>
+
+                    <select
+                        class="form-select multi-laptop-services"
+                        name="service_ids[]"
+                        multiple
+                        required>
+
+                        @foreach($laptopServices as $service)
+
+                            <option value="{{ $service->id }}">
+
+                                {{ $service->service_name }}
+
+                            </option>
+
+                        @endforeach
+
+                    </select>
+
+                </div>
+
+                <div class="col-md-2 d-flex align-items-end">
+
+                    <button
+                        class="btn btn-primary w-100"
+                        type="submit">
+
+                        Assign
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </form>
 
     </div>
 
@@ -381,102 +474,93 @@ Action
 
 <tbody>
 
-@if($providerServices->count())
+@if($providers->count())
 
-@foreach($providerServices as $providerId => $group)
-
-@php
-    $provider = $group->first()->provider;
-@endphp
+@foreach($providers as $provider)
 
 <tr>
 
-<td>
+    <td>
 
-    <div class="serial-box">
-        {{ $loop->iteration }}
-    </div>
-
-</td>
-
-<td>
-
-    <div class="engineer-box">
-
-        <div class="avatar">
-
-            {{ strtoupper(substr($provider->name,0,1)) }}
-
+        <div class="serial-box">
+            {{ $loop->iteration }}
         </div>
 
-        <div>
+    </td>
 
-            <div class="engineer-name">
+    <td>
 
-                {{ $provider->name }}
+        <div class="engineer-box">
+
+            <div class="avatar">
+
+                {{ strtoupper(substr($provider->name,0,1)) }}
 
             </div>
 
-            <div class="engineer-email">
+            <div>
 
-                {{ $provider->email }}
+                <div class="engineer-name">
+
+                    {{ $provider->name }}
+
+                </div>
+
+                <div class="engineer-email">
+
+                    {{ $provider->email }}
+
+                </div>
 
             </div>
 
         </div>
 
-    </div>
+    </td>
 
-</td>
+    <td>
 
-<td>
+        @if($provider->laptopServices->count())
 
-    @foreach($group as $item)
+            @foreach($provider->laptopServices as $service)
 
-        @if($item->service)
+                <span class="service-badge">
 
-            <span class="service-badge">
+                    {{ $service->service_name }}
 
-                {{ $item->service->service_name }}
+                </span>
+
+            @endforeach
+
+        @else
+
+            <span class="text-danger">
+
+                No Service Assigned
 
             </span>
 
         @endif
 
-    @endforeach
+    </td>
 
-</td>
+    <td>
 
-<td>
+        <div class="action-buttons">
 
-    <div class="action-buttons">
+            <a
+                href="{{ url('/admin/providers/view/'.$provider->id) }}"
+                class="edit-btn">
 
-        <a
-            href="{{ url('/admin/provider-services/edit/'.$group->first()->id) }}"
-            class="edit-btn"
-        >
+                <i class="fa fa-eye me-1"></i>
 
-            <i class="fa fa-edit me-1"></i>
+                View
 
-            Edit
+            </a>
 
-        </a>
+        </div>
 
-        <a
-            href="{{ url('/admin/provider-services/delete/'.$group->first()->id) }}"
-            class="delete-btn"
-            onclick="return confirm('Delete this assignment?')"
-        >
-
-            <i class="fa fa-trash me-1"></i>
-
-            Delete
-
-        </a>
-
-    </div>
-
-</td>
+    </td>
 
 </tr>
 
@@ -496,23 +580,16 @@ Action
             >
 
             <h3>
+
                 No Engineer Services Found
+
             </h3>
 
             <p>
+
                 No services have been assigned to any engineer yet.
+
             </p>
-
-            <a
-                href="{{ url('/admin/provider-services/create') }}"
-                class="assign-btn mt-3"
-            >
-
-                <i class="fa fa-plus me-2"></i>
-
-                Assign First Service
-
-            </a>
 
         </div>
 
@@ -522,7 +599,7 @@ Action
 
 @endif
 
-            </tbody>
+</tbody>
 
         </table>
 
@@ -553,6 +630,16 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
         });
+
+    });
+
+    $('.multi-laptop-services').select2({
+
+        placeholder: 'Select Laptop Services',
+
+        allowClear: true,
+
+        width: '100%'
 
     });
 

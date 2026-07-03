@@ -107,21 +107,31 @@
                             @endif
                         </td>
 
-                        <td>
-                            <a href="{{ url('/admin/providers/edit/'.$provider->id) }}" class="btn btn-sm btn-warning rounded-pill px-3">
-                                Edit
-                            </a>
+                        <td class="text-center">
 
-                               <a href="{{ url('/admin/providers/'.$provider->id.'/services') }}"
-                                class="btn btn-info btn-sm">
-                                    <i class="fas fa-eye"></i> View
+                            <div class="d-flex justify-content-center gap-2 mb-2">
+
+                                <a href="{{ url('/admin/providers/edit/'.$provider->id) }}"
+                                    class="btn btn-warning btn-sm">
+                                    Edit
                                 </a>
 
-                            <a href="{{ url('/admin/providers/delete/'.$provider->id) }}"
-                               onclick="return confirm('Delete this engineer?')"
-                               class="btn btn-sm btn-danger rounded-pill px-3">
-                                Delete
-                            </a>
+                                <a href="{{ url('/admin/providers/view/'.$provider->id) }}"
+                                class="btn btn-info btn-sm">
+                                    View
+                                </a>
+
+                            </div>
+
+                            <div class="d-flex justify-content-center">
+
+                                <a href="{{ url('/admin/providers/delete/'.$provider->id) }}"
+                                    class="btn btn-danger btn-sm">
+                                    Delete
+                                </a>
+
+                            </div>
+
                         </td>
                     </tr>
                 @endforeach
@@ -140,5 +150,18 @@ document.getElementById('searchInput').addEventListener('keyup', function () {
     });
 });
 </script>
+
+<style>
+
+.btn-sm{
+    min-width:70px;
+    border-radius:20px;
+}
+
+td{
+    vertical-align:middle;
+}
+
+</style>
 
 @endsection

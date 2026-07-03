@@ -325,40 +325,33 @@
 
     </div>
 
-        <!-- ================= Skills ================= -->
 
-    <div class="col-12">
-
-        <hr class="my-4">
-
-        <h4 class="fw-bold text-primary mb-4">
-
-            Skills
-
-        </h4>
-
-    </div>
+    <!-- ================= Laptop Services ================= -->
 
     <div class="col-12">
 
         <label class="form-label fw-semibold">
-
-            Select Skills
-
+            Laptop Services
         </label>
 
         <select
-            name="skills[]"
-            class="form-control multi-skills"
+            name="laptop_services[]"
+            class="form-control multi-laptop-services"
             multiple>
 
-            @foreach($skills as $skill)
+            @php
+                $assignedLaptopServices = optional($provider->laptopServices)
+                    ->pluck('id')
+                    ->toArray();
+            @endphp
+
+            @foreach($laptopServices as $service)
 
                 <option
-                    value="{{ $skill->id }}"
-                    {{ $provider->skills->contains('id', $skill->id) ? 'selected' : '' }}>
+                    value="{{ $service->id }}"
+                    {{ in_array($service->id,$assignedLaptopServices) ? 'selected' : '' }}>
 
-                    {{ $skill->skill_name }}
+                    {{ $service->service_name }}
 
                 </option>
 
@@ -367,101 +360,6 @@
         </select>
 
     </div>
-
-    <!-- ================= Laptop Services ================= -->
-
-    <div class="col-12">
-
-        <hr class="my-4">
-
-        <h4 class="fw-bold text-primary mb-4">
-
-            Laptop Services
-
-        </h4>
-
-    </div>
-
-    @php
-        $assignedLaptopServices = $provider->laptopServices
-            ? $provider->laptopServices->pluck('id')->toArray()
-            : [];
-    @endphp
-
-    @foreach($laptopServices as $service)
-
-    <div class="col-md-6">
-
-        <div class="card border service-card">
-
-            <div class="card-body">
-
-                <div class="form-check">
-
-                    <input
-                        class="form-check-input"
-                        type="checkbox"
-                        name="laptop_services[]"
-                        value="{{ $service->id }}"
-                        id="service{{ $service->id }}"
-
-                        {{ in_array($service->id,$assignedLaptopServices) ? 'checked' : '' }}>
-
-                    <label
-                        class="form-check-label w-100"
-                        for="service{{ $service->id }}">
-
-                        <h6 class="mb-1">
-
-                            {{ $service->service_name }}
-
-                        </h6>
-
-                        <small class="text-muted d-block">
-
-                            {{ $service->laptopServiceCategory->category_name ?? '' }}
-
-                        </small>
-
-                        @if($service->laptopBrand)
-
-                        <small class="d-block">
-
-                            Brand :
-                            {{ $service->laptopBrand->brand_name }}
-
-                        </small>
-
-                        @endif
-
-                        @if($service->laptopModel)
-
-                        <small class="d-block">
-
-                            Model :
-                            {{ $service->laptopModel->model_name }}
-
-                        </small>
-
-                        @endif
-
-                        <strong class="text-success">
-
-                            ₹{{ number_format($service->price,2) }}
-
-                        </strong>
-
-                    </label>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-    @endforeach
 
 
     <!-- ================= Documents ================= -->
@@ -749,71 +647,46 @@
 
 .form-control,
 .form-select{
-
     min-height:52px;
-
 }
 
 .form-label{
-
     font-weight:600;
-
 }
 
 .card{
-
     border-radius:20px;
-
 }
 
 .service-card{
-
     transition:.25s ease;
-
     cursor:pointer;
-
 }
 
 .service-card:hover{
-
     transform:translateY(-3px);
-
     border-color:#0d6efd;
-
     box-shadow:0 10px 25px rgba(13,110,253,.15);
-
 }
 
 .service-card .card-body{
-
     padding:18px;
-
 }
 
 .form-check-input{
-
     width:20px;
-
     height:20px;
-
 }
 
 .select2-container{
-
     width:100%!important;
-
 }
 
 .select2-container--default .select2-selection--multiple{
-
     border-radius:10px;
-
     min-height:52px;
-
     border:1px solid #ced4da;
-
     padding:6px;
-
 }
 
 </style>
@@ -825,6 +698,16 @@ $(document).ready(function(){
     $('.multi-skills').select2({
 
         placeholder:'Select Skills',
+
+        allowClear:true,
+
+        width:'100%'
+
+    });
+
+    $('.multi-laptop-services').select2({
+
+        placeholder:'Select Laptop Services',
 
         allowClear:true,
 

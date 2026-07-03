@@ -63,15 +63,15 @@ class ServiceProvider extends Model
         return $this->hasMany(Booking::class, 'provider_id');
     }
 
-    public function skills()
-    {
-        return $this->belongsToMany(
-            Skill::class,
-            'provider_skills',
-            'provider_id',
-            'skill_id'
-        );
-    }
+ public function skills()
+{
+    return $this->belongsToMany(
+        Skill::class,
+        'provider_skills',
+        'provider_id',
+        'skill_id'
+    );
+}
 
     public function laptopServices()
     {
