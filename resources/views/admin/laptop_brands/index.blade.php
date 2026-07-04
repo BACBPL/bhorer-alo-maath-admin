@@ -50,7 +50,7 @@
 
             <tr>
 
-                <td>{{ $brand->id }}</td>
+                <td>{{ $loop->iteration }}</td>
 
                 <td>{{ $brand->brand_name }}</td>
 
@@ -60,11 +60,14 @@
 
                 <td>
 
-                    <a href="#" class="btn btn-sm btn-primary">
+                    <a href="{{ url('/admin/laptop-brands/edit/'.$brand->id) }}"
+                    class="btn btn-sm btn-primary">
                         Edit
                     </a>
 
-                    <a href="#" class="btn btn-sm btn-danger">
+                    <a href="{{ url('/admin/laptop-brands/delete/'.$brand->id) }}"
+                    class="btn btn-sm btn-danger"
+                    onclick="return confirm('Delete this brand?')">
                         Delete
                     </a>
 

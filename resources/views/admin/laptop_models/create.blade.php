@@ -20,28 +20,22 @@
         <div class="mb-3">
 
             <label class="form-label">
-
-                Laptop Brand
-
+                Laptop Service Category
             </label>
 
             <select
-                name="laptop_brand_id"
+                name="laptop_service_category_id"
                 class="form-control premium-input"
                 required>
 
                 <option value="">
-
-                    Select Brand
-
+                    Select Category
                 </option>
 
-                @foreach($brands as $brand)
+                @foreach($categories as $category)
 
-                    <option value="{{ $brand->id }}">
-
-                        {{ $brand->brand_name }}
-
+                    <option value="{{ $category->id }}">
+                        {{ $category->category_name }}
                     </option>
 
                 @endforeach
@@ -53,9 +47,34 @@
         <div class="mb-3">
 
             <label class="form-label">
+                Laptop Brand
+            </label>
 
+            <select
+                name="laptop_brand_id"
+                class="form-control premium-input"
+                required>
+
+                <option value="">
+                    Select Brand
+                </option>
+
+                @foreach($brands as $brand)
+
+                    <option value="{{ $brand->id }}">
+                        {{ $brand->brand_name }}
+                    </option>
+
+                @endforeach
+
+            </select>
+
+        </div>
+
+        <div class="mb-3">
+
+            <label class="form-label">
                 Model Name
-
             </label>
 
             <input
@@ -69,9 +88,7 @@
         <div class="mb-3">
 
             <label class="form-label">
-
                 Description
-
             </label>
 
             <textarea
@@ -84,9 +101,7 @@
         <div class="mb-4">
 
             <label class="form-label">
-
                 Status
-
             </label>
 
             <select
@@ -94,15 +109,11 @@
                 class="form-control premium-input">
 
                 <option value="Active">
-
                     Active
-
                 </option>
 
                 <option value="Inactive">
-
                     Inactive
-
                 </option>
 
             </select>

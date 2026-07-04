@@ -55,7 +55,7 @@
 
         <tr>
 
-            <td>{{ $model->id }}</td>
+            <td>{{ $loop->iteration }}</td>
 
             <td>{{ $model->brand->brand_name }}</td>
 
@@ -67,18 +67,15 @@
 
             <td>
 
-                <a href="#"
-                   class="btn btn-sm btn-primary">
-
+                <a href="/admin/laptop-models/edit/{{ $model->id }}"
+                class="btn btn-sm btn-primary">
                     Edit
-
                 </a>
-
-                <a href="#"
-                   class="btn btn-sm btn-danger">
-
+               
+                <a href="/admin/laptop-models/delete/{{ $model->id }}"
+                    class="btn btn-sm btn-danger"
+                    onclick="return confirm('Delete this model?')">
                     Delete
-
                 </a>
 
             </td>

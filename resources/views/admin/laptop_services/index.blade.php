@@ -49,7 +49,7 @@
 
                 <tr>
 
-                    <td>{{ $service->id }}</td>
+                    <td>{{ $loop->iteration }}</td>
 
                     <td>{{$service->laptopServiceCategory->category_name ?? '-' }}</td>
 
@@ -61,13 +61,17 @@
 
                     <td>
 
-                        <button class="btn btn-sm btn-primary">
+                        <a href="/admin/laptop-services/edit/{{ $service->id }}"
+                        class="btn btn-sm btn-primary">
                             Edit
-                        </button>
+                        </a>
 
-                        <button class="btn btn-sm btn-danger">
+                        
+                        <a href="/admin/laptop-services/delete/{{ $service->id }}"
+                        class="btn btn-sm btn-danger"
+                        onclick="return confirm('Delete this service?')">
                             Delete
-                        </button>
+                        </a>
 
                     </td>
 

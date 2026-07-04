@@ -58,19 +58,31 @@ Route::get('/admin/services/delete/{id}', [ServiceController::class, 'deleteServ
 Route::get('/admin/laptop-services', [LaptopServiceController::class, 'index']);
 Route::get('/admin/laptop-services/create', [LaptopServiceController::class, 'create']);
 Route::post('/admin/laptop-services/store', [LaptopServiceController::class, 'store']);
+Route::get('/admin/laptop-services/edit/{id}', [LaptopServiceController::class, 'edit']);
+Route::post('/admin/laptop-services/update/{id}', [LaptopServiceController::class, 'update']);
+Route::get('/admin/laptop-services/delete/{id}', [LaptopServiceController::class, 'delete']);
 Route::get('/admin/laptop-service-categories', [LaptopServiceCategoryController::class, 'index']);
 Route::get('/admin/laptop-service-categories/create', [LaptopServiceCategoryController::class, 'create']);
 Route::post('/admin/laptop-service-categories/store', [LaptopServiceCategoryController::class, 'store']);
+Route::get('/admin/laptop-service-categories/edit/{id}', [LaptopServiceCategoryController::class, 'edit']);
+Route::post('/admin/laptop-service-categories/update/{id}', [LaptopServiceCategoryController::class, 'update']);
+Route::get('/admin/laptop-service-categories/delete/{id}', [LaptopServiceCategoryController::class, 'delete']);
 
 // Laptop Brands
 Route::get('/admin/laptop-brands', [LaptopBrandController::class, 'index']);
 Route::get('/admin/laptop-brands/create', [LaptopBrandController::class, 'create']);
 Route::post('/admin/laptop-brands/store', [LaptopBrandController::class, 'store']);
+Route::get('/admin/laptop-brands/edit/{id}', [LaptopBrandController::class, 'edit']);
+Route::post('/admin/laptop-brands/update/{id}', [LaptopBrandController::class, 'update']);
+Route::get('/admin/laptop-brands/delete/{id}', [LaptopBrandController::class, 'delete']);
 
 // Laptop Models
 Route::get('/admin/laptop-models', [LaptopModelController::class, 'index']);
 Route::get('/admin/laptop-models/create', [LaptopModelController::class, 'create']);
 Route::post('/admin/laptop-models/store', [LaptopModelController::class, 'store']);
+Route::get('/admin/laptop-models/edit/{id}', [LaptopModelController::class, 'edit']);
+Route::post('/admin/laptop-models/update/{id}', [LaptopModelController::class, 'update']);
+Route::get('/admin/laptop-models/delete/{id}', [LaptopModelController::class, 'delete']);
 
 // Providers
 Route::get('/admin/providers', [ProviderController::class, 'providers']);

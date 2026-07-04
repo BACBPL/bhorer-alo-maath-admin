@@ -24,12 +24,22 @@
                 <label class="form-label">
                     Category Name
                 </label>
+            <select
+                name="category_name"
+                class="form-control"
+                required>
 
-                <input
-                    type="text"
-                    name="category_name"
-                    class="form-control premium-input"
-                    required>
+                <option value="">Select Category</option>
+
+                @foreach($categories as $cat)
+
+                    <option value="{{ $cat->category_name }}">
+                        {{ $cat->category_name }}
+                    </option>
+
+                @endforeach
+
+            </select>
 
             </div>
 

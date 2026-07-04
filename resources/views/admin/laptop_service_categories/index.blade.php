@@ -40,7 +40,7 @@
 
                 <tr>
 
-                    <td>{{ $category->id }}</td>
+                    <td>{{ $loop->iteration }}</td>
 
                     <td>{{ $category->category_name }}</td>
 
@@ -50,13 +50,16 @@
 
                     <td>
 
-                        <button class="btn btn-sm btn-primary">
+                        <a href="{{ url('/admin/laptop-service-categories/edit/'.$category->id) }}"
+                        class="btn btn-sm btn-primary">
                             Edit
-                        </button>
+                        </a>
 
-                        <button class="btn btn-sm btn-danger">
+                        <a href="{{ url('/admin/laptop-service-categories/delete/'.$category->id) }}"
+                        class="btn btn-sm btn-danger"
+                        onclick="return confirm('Delete this category?')">
                             Delete
-                        </button>
+                        </a>
 
                     </td>
 

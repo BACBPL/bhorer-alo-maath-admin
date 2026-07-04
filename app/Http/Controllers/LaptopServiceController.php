@@ -24,18 +24,18 @@ class LaptopServiceController extends Controller
         );
     }
 
-    public function create()
-    {
-        $categories = LaptopServiceCategory::where(
-            'status',
-            'Active'
-        )->get();
+   public function create()
+{
+    $laptopServiceCategories = LaptopServiceCategory::where(
+        'status',
+        'Active'
+    )->get();
 
-        return view(
-            'admin.laptop_services.create',
-            compact('categories')
-        );
-    }
+    return view(
+        'admin.laptop_services.create',
+        compact('laptopServiceCategories')
+    );
+}
 
     public function store(Request $request)
     {
@@ -72,4 +72,82 @@ class LaptopServiceController extends Controller
         return redirect('/admin/laptop-services')
             ->with('success', 'Laptop Service Added Successfully');
     }
+
+public function edit($id)
+{
+    $service = LaptopService::findOrFail($id);
+
+    $laptopServiceCategories = LaptopServiceCategory::where('status','Active')->get();
+
+    return view(
+        'admin.laptop_services.edit',
+        compact(
+            'service',
+            'laptopServiceCategories'
+        )
+    );
+}
+
+public function update(Request $request, $id)
+{
+    $service = LaptopService::findOrFail($id);
+
+    $imageName = $service->image;
+
+    if ($request->hasFile('image')) {
+
+        if (
+            $service->image &&
+            file_exists(public_path('uploads/laptop_services/'.$service->image))
+        ) {
+            unlink(public_path('uploads/laptop_services/'.$service->image));
+        }
+
+        $imageName = time().'_'.$request->image->getClientOriginalName();
+
+        $request->image->move(
+            public_path('uploads/laptop_services'),
+            $imageName
+        );
+    }
+
+    $service->update([
+
+        'laptop_service_category_id' => $request->laptop_service_category_id,
+
+        'service_name' => $request->service_name,
+
+        'description' => $request->description,
+
+        'price' => $request->price,
+
+        'image' => $imageName,
+
+        'status' => $request->status,
+
+        'is_featured' => $request->has('is_featured') ? 1 : 0,
+
+    ]);
+
+    return redirect('/admin/laptop-services')
+            ->with('success', 'Laptop Service Updated Successfully');
+}
+
+public function delete($id)
+{
+    $service = LaptopService::findOrFail($id);
+
+    if (
+        $service->image &&
+        file_exists(public_path('uploads/laptop_services/'.$service->image))
+    ) {
+        unlink(public_path('uploads/laptop_services/'.$service->image));
+    }
+
+    $service->delete();
+
+    return redirect('/admin/laptop-services')
+            ->with('success', 'Laptop Service Deleted Successfully');
+}
+
 }
