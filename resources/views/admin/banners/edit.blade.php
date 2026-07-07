@@ -74,10 +74,7 @@
                             Offer Banner
                         </option>
 
-                        <option value="new_noteworthy_banner"
-                            {{ $banner->type == 'new_noteworthy_banner' ? 'selected' : '' }}>
-                            New & Noteworthy Banner
-                        </option>
+                        <option value="service_banner">Service Banner</option>
 
                         <option value="most_booked_banner"
                             {{ $banner->type == 'most_booked_banner' ? 'selected' : '' }}>
@@ -106,6 +103,18 @@
                         </option>
 
                     </select>
+                </div>
+
+                <div class="mb-3">
+                    <label>Redirect URL</label>
+
+                    <input
+                        type="text"
+                        name="redirect_url"
+                        class="form-control"
+                        value="{{ $banner->redirect_url }}"
+                        placeholder="/hardware"
+                    >
                 </div>
 
                 <div class="col-12 mb-4">

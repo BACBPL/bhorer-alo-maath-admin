@@ -66,7 +66,7 @@
                 </option>
 
                 <option value="new_noteworthy_banner">
-                    New & Noteworthy Banner
+                   Service Banner
                 </option>
 
                 <option value="most_booked_banner">

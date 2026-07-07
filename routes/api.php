@@ -19,6 +19,6 @@ Route::get('/hero-banners', [BannerController::class, 'heroBanners']);
 
 Route::get('/offer-banners', [BannerController::class, 'offerBanners']);
 
-Route::get('/new-noteworthy-banners', [BannerController::class, 'newNoteworthyBanners']);
-
 Route::get('/most-booked-banners', [BannerController::class, 'mostBookedBanners']);
+
+Route::get('/service-banners', [BannerController::class, 'serviceBanners']);

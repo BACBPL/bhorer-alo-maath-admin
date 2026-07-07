@@ -119,6 +119,7 @@ public function update(Request $request, $id)
     $banner->location = $request->location;
     $banner->type = $request->type;
     $banner->status = $request->status;
+    $banner->redirect_url = $request->redirect_url;
 
     if ($request->hasFile('image')) {
 

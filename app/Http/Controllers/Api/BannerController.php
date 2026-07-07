@@ -31,9 +31,9 @@ class BannerController extends Controller
         ]);
     }
 
-    public function newNoteworthyBanners()
+public function serviceBanners()
 {
-    $banners = Banner::where('type', 'new_noteworthy_banner')
+    $banners = Banner::where('type', 'service_banner')
         ->where('status', 'Active')
         ->get();
 
