@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\ServiceController;
 use App\Http\Controllers\Api\BannerController;
+use App\Http\Controllers\Api\LoginController;
 
 Route::get('/categories', [CategoryController::class, 'index']);
 
@@ -22,3 +23,7 @@ Route::get('/offer-banners', [BannerController::class, 'offerBanners']);
 Route::get('/most-booked-banners', [BannerController::class, 'mostBookedBanners']);
 
 Route::get('/service-banners', [BannerController::class, 'serviceBanners']);
+
+Route::post('/user-login', [LoginController::class, 'verifyOtp']);
+
+Route::post('/send-otp', [LoginController::class, 'sendOtp']);
