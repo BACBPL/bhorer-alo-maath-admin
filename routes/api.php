@@ -27,3 +27,13 @@ Route::get('/service-banners', [BannerController::class, 'serviceBanners']);
 Route::post('/user-login', [LoginController::class, 'verifyOtp']);
 
 Route::post('/send-otp', [LoginController::class, 'sendOtp']);
+
+Route::post('/customer', [LoginController::class, 'getCustomer']);
+Route::post('/verify-otp', [LoginController::class, 'verifyOtp']);
+
+Route::middleware('auth:sanctum')->group(function () {
+
+    Route::get('/customer', [LoginController::class, 'getCustomer']);
+    Route::post('/complete-profile', [LoginController::class,'completeProfile']);
+
+});
