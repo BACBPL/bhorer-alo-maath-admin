@@ -18,24 +18,24 @@ class Customer extends Authenticatable
     public $timestamps = true;
 
     protected $fillable = [
-        'firstname',
-        'lastname',
-        'email',
-        'mobile',
-        'alternative_mobile',
-        'address',
-        'house_no',
-        'street_name',
-        'pincode',
-        'city',
-        'state',
-        'otp',
-        'email_verified',
-        'account_status',
-        'status',
-        'created_at',
-        'updated_at'
-    ];
+
+    'firstname',
+    'lastname',
+    'email',
+    'profile_image',
+    'mobile',
+    'alternative_mobile',
+    'address',
+    'house_no',
+    'street_name',
+    'pincode',
+    'city',
+    'state',
+    'otp',
+    'email_verified',
+    'account_status',
+    'status',
+];
 
     protected $hidden = [
         'password',

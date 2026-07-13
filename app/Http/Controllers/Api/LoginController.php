@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 use App\Models\Customer;
 use App\Models\PersonalAccessToken;
 
@@ -141,8 +142,9 @@ class LoginController extends Controller
         $customer->lastname = $request->lastname;
         $customer->email = $request->email;
         $customer->alternative_mobile = $request->alternative_mobile;
-        $customer->house_no = $request->house_no;
         $customer->street_name = $request->street_name;
+        $customer->house_no = $request->house_no;
+        $customer->address = $request->address;
         $customer->pincode = $request->pincode;
         $customer->city = $request->city;
         $customer->state = $request->state;
@@ -150,52 +152,63 @@ class LoginController extends Controller
         $customer->account_status = "ACCOUNT_ACTIVE";
 
         $customer->save();
+        $customer->refresh();
 
         return response()->json([
             "status" => true,
-            "message" => "Profile Updated"
+            "message" => "Profile Updated",
+            "customer" => $customer
         ]);
     }
 
-    public function getCustomer(Request $request){
+    public function getCustomer(Request $request)
+    {
+        $customer = $request->user();
 
-        $token = $request->bearerToken();
-        // Or $token = $request->header('Authorization');
-        // return response()->json([
-        //     "token" => $token
-        // ]);
-        
-        if (!$token) {
-            return response()->json(['error' => 'Token not provided'], 401);
-        }
-        
-        // Find the token in database
-        $accessToken = PersonalAccessToken::findToken($token);
+        return response()->json([
+            "status" => true,
+            "customer" => $customer
+        ]);
+    }
 
-        // Check if token exists
-        if (!$accessToken) {
+    public function uploadProfileImage(Request $request)
+    {
+        $request->validate([
+            'profile_image' => 'required|image|mimes:jpg,jpeg,png|max:2048',
+        ]);
+
+        $customer = $request->user();
+
+        if (!$customer) {
             return response()->json([
-                'accessToken' => $accessToken,
-                'success' => false,
-                'message' => 'Invalid or expired token'
+                'status' => false,
+                'message' => 'Unauthorized'
             ], 401);
         }
 
-    
-        $customer = $accessToken->tokenable;
+        if ($request->hasFile('profile_image')) {
+
+            // Delete old image if it exists
+            if (
+                $customer->profile_image &&
+                file_exists(storage_path('app/public/' . $customer->profile_image))
+            ) {
+                unlink(storage_path('app/public/' . $customer->profile_image));
+            }
+
+            $path = $request->file('profile_image')->store(
+                'profile_images',
+                'public'
+            );
+
+            $customer->profile_image = $path;
+            $customer->save();
+        }
 
         return response()->json([
-            'success' => true,
-            'data' => [
-                
-                'customer' => [
-                    'id' => $customer->id,
-                    'name' => $customer->name,
-                    'email' => $customer->email,
-                    'phone' => $customer->mobile,
-                    'created_at' => $customer->created_at,
-                ]
-            ]
+            'status' => true,
+            'message' => 'Profile image uploaded successfully.',
+            'customer' => $customer,
         ]);
     }
 }

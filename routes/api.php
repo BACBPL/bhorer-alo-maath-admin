@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\ServiceController;
 use App\Http\Controllers\Api\BannerController;
 use App\Http\Controllers\Api\LoginController;
+use App\Http\Controllers\Api\LaptopServiceController;
 
 Route::get('/categories', [CategoryController::class, 'index']);
 
@@ -33,7 +34,19 @@ Route::post('/verify-otp', [LoginController::class, 'verifyOtp']);
 
 Route::middleware('auth:sanctum')->group(function () {
 
-    Route::get('/customer', [LoginController::class, 'getCustomer']);
-    Route::post('/complete-profile', [LoginController::class,'completeProfile']);
+    Route::get('/profile', [LoginController::class, 'getCustomer']);
+
+    Route::post('/complete-profile', [LoginController::class, 'completeProfile']);
+
+    Route::post('/upload-profile-image', [LoginController::class, 'uploadProfileImage']);
 
 });
+
+Route::middleware('auth:sanctum')->post(
+    '/upload-profile-image',
+    [LoginController::class,'uploadProfileImage']
+);
+
+Route::get('/laptop-services', [LaptopServiceController::class, 'index']);
+
+Route::get('/laptop-services/{id}', [LaptopServiceController::class, 'show']);

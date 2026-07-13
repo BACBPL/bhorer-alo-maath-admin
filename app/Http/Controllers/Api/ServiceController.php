@@ -63,4 +63,23 @@ class ServiceController extends Controller
             'data' => $services
         ]);
     }
+
+    public function laptopServices()
+    {
+        $services = Service::with([
+            'category',
+            'subCategory'
+        ])
+        ->where('status', 'Active')
+        ->whereHas('category', function ($query) {
+            $query->where('category_name', 'Laptop');
+        })
+        ->get();
+
+        return response()->json([
+            'success' => true,
+            'data' => $services
+        ]);
+    }
+
 }
