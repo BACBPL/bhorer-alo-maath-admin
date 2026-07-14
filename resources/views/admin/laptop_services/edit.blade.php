@@ -12,10 +12,11 @@
             Update Laptop Service Details
         </p>
 
-        <form action="/admin/laptop-services/update/{{ $service->id }}"
+        <form
+            action="{{ url('/admin/laptop-services/update/'.$service->id) }}"
             method="POST"
-            enctype="multipart/form-data">
-
+            enctype="multipart/form-data"
+        >
             @csrf
 
             <div class="row">
@@ -107,9 +108,11 @@
 
                     @if($service->image)
 
-                        <img src="{{ asset($service->image) }}"
-                             width="80"
-                             class="mt-2 rounded">
+                       <img
+                            src="{{ asset('storage/'.$service->image) }}"
+                            width="80"
+                            class="mt-2 rounded"
+                        >
 
                     @endif
 

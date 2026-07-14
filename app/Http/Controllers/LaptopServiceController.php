@@ -5,18 +5,17 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\LaptopService;
 use App\Models\LaptopServiceCategory;
+use Illuminate\Support\Facades\Storage;
 
 class LaptopServiceController extends Controller
 {
     public function index()
     {
         $laptopServices = LaptopService::with([
-                            'laptopServiceCategory',
-                            'laptopBrand',
-                            'laptopModel'
-                        ])
-                    ->latest()
-                    ->get();
+            'laptopServiceCategory',
+            'laptopBrand',
+            'laptopModel'
+        ])->latest()->get();
 
         return view(
             'admin.laptop_services.index',
@@ -92,22 +91,17 @@ public function update(Request $request, $id)
 {
     $service = LaptopService::findOrFail($id);
 
-    $imageName = $service->image;
+    $imagePath = $service->image;
 
     if ($request->hasFile('image')) {
 
-        if (
-            $service->image &&
-            file_exists(public_path('uploads/laptop_services/'.$service->image))
-        ) {
-            unlink(public_path('uploads/laptop_services/'.$service->image));
+        if ($service->image) {
+            Storage::disk('public')->delete($service->image);
         }
 
-        $imageName = time().'_'.$request->image->getClientOriginalName();
-
-        $request->image->move(
-            public_path('uploads/laptop_services'),
-            $imageName
+        $imagePath = $request->file('image')->store(
+            'laptop_service_banners',
+            'public'
         );
     }
 
@@ -121,7 +115,7 @@ public function update(Request $request, $id)
 
         'price' => $request->price,
 
-        'image' => $imageName,
+        'image' => $imagePath,
 
         'status' => $request->status,
 
@@ -130,7 +124,7 @@ public function update(Request $request, $id)
     ]);
 
     return redirect('/admin/laptop-services')
-            ->with('success', 'Laptop Service Updated Successfully');
+        ->with('success', 'Laptop Service Updated Successfully');
 }
 
 public function delete($id)
