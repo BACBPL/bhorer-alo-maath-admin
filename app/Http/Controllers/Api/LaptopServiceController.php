@@ -19,6 +19,19 @@ class LaptopServiceController extends Controller
         ]);
     }
 
+    public function mostBooked()
+    {
+        $services = LaptopService::where('status', 'Active')
+            ->where('is_most_booked', 1)
+            ->orderBy('id')
+            ->get();
+
+        return response()->json([
+            'success' => true,
+            'data' => $services
+        ]);
+    }
+
     public function show($id)
     {
         $service = LaptopService::findOrFail($id);

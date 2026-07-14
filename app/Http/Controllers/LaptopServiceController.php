@@ -23,6 +23,19 @@ class LaptopServiceController extends Controller
         );
     }
 
+    public function mostBooked()
+{
+    $services = LaptopService::where('status', 'Active')
+        ->where('is_most_booked', 1)
+        ->orderBy('id')
+        ->get();
+
+    return response()->json([
+        'success' => true,
+        'data' => $services
+    ]);
+}
+
    public function create()
 {
     $laptopServiceCategories = LaptopServiceCategory::where(
@@ -37,40 +50,40 @@ class LaptopServiceController extends Controller
 }
 
     public function store(Request $request)
-    {
-        $imageName = null;
+{
+    $imagePath = null;
 
-        if ($request->hasFile('image')) {
+    if ($request->hasFile('image')) {
 
-            $imageName = time().'_'.$request->image->getClientOriginalName();
-
-            $request->image->move(
-                public_path('uploads/laptop_services'),
-                $imageName
-            );
-        }
-
-        LaptopService::create([
-
-            'laptop_service_category_id' => $request->laptop_service_category_id,
-
-            'service_name' => $request->service_name,
-
-            'description' => $request->description,
-
-            'price' => $request->price,
-
-            'image' => $imageName,
-
-            'status' => $request->status,
-
-            'is_featured' => $request->has('is_featured') ? 1 : 0,
-
-        ]);
-
-        return redirect('/admin/laptop-services')
-            ->with('success', 'Laptop Service Added Successfully');
+        $imagePath = $request->file('image')->store(
+            'laptop_service_banners',
+            'public'
+        );
     }
+
+    LaptopService::create([
+
+        'laptop_service_category_id' => $request->laptop_service_category_id,
+
+        'service_name' => $request->service_name,
+
+        'description' => $request->description,
+
+        'price' => $request->price,
+
+        'image' => $imagePath,
+
+        'status' => $request->status,
+
+        'is_featured' => $request->has('is_featured') ? 1 : 0,
+
+        'is_most_booked' => $request->has('is_most_booked') ? 1 : 0,
+
+    ]);
+
+    return redirect('/admin/laptop-services')
+        ->with('success', 'Laptop Service Added Successfully');
+}
 
 public function edit($id)
 {
@@ -120,6 +133,8 @@ public function update(Request $request, $id)
         'status' => $request->status,
 
         'is_featured' => $request->has('is_featured') ? 1 : 0,
+
+        'is_most_booked' => $request->has('is_most_booked') ? 1 : 0,
 
     ]);
 

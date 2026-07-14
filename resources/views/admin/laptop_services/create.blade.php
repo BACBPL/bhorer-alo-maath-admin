@@ -131,23 +131,32 @@
 
             </div>
 
-            <div class="form-check mb-4">
+            <div class="form-check mb-2">
 
                 <input
                     class="form-check-input"
                     type="checkbox"
                     id="featured"
                     name="is_featured"
-                    value="1"
-                >
+                    value="1">
 
-                <label
-                    class="form-check-label"
-                    for="featured"
-                >
-
+                <label class="form-check-label" for="featured">
                     Featured Service
+                </label>
 
+            </div>
+
+            <div class="form-check mb-4">
+
+                <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="most_booked"
+                    name="is_most_booked"
+                    value="1">
+
+                <label class="form-check-label" for="most_booked">
+                    Most Booked Service
                 </label>
 
             </div>

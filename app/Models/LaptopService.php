@@ -3,20 +3,32 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\LaptopServiceCategory;
+use Illuminate\Support\Facades\Storage;
 
 class LaptopService extends Model
 {
     protected $fillable = [
-        'laptop_service_category_id',
-        'service_type',
-        'service_name',
-        'description',
-        'price',
-        'image',
-        'status',
-        'is_featured'
-    ];
+    'laptop_service_category_id',
+    'service_type',
+    'service_name',
+    'description',
+    'price',
+    'image',
+    'status',
+    'is_featured',
+    'is_most_booked'
+];
+
+    protected $appends = ['image_url'];
+
+public function getImageUrlAttribute()
+{
+    if (!$this->image) {
+        return null;
+    }
+
+    return asset('storage/' . $this->image);
+}
 
     public function laptopServiceCategory()
     {

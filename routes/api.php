@@ -50,3 +50,5 @@ Route::middleware('auth:sanctum')->post(
 Route::get('/laptop-services', [LaptopServiceController::class, 'index']);
 
 Route::get('/laptop-services/{id}', [LaptopServiceController::class, 'show']);
+
+Route::get('/most-booked-laptop-services', [LaptopServiceController::class, 'mostBooked']);

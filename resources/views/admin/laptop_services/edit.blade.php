@@ -164,6 +164,22 @@
 
             </div>
 
+            <div class="form-check mb-4">
+
+                <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="most_booked"
+                    name="is_most_booked"
+                    value="1"
+                    {{ $service->is_most_booked ? 'checked' : '' }}>
+
+                <label class="form-check-label" for="most_booked">
+                    Most Booked Service
+                </label>
+
+            </div>
+
             <button
                 class="btn btn-premium"
                 type="submit">
