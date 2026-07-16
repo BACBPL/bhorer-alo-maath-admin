@@ -34,6 +34,53 @@
 
         @endif
 
+        <!-- Search & Filter -->
+        <form method="GET" action="/admin/subcategories" class="mb-4">
+
+            <div class="row g-3">
+
+                <div class="col-md-6">
+                    <input
+                        type="text"
+                        name="search"
+                        class="form-control"
+                        placeholder="Search Sub Category..."
+                        value="{{ request('search') }}">
+                </div>
+
+                <div class="col-md-4">
+                    <select
+                        name="category_id"
+                        class="form-select"
+                        onchange="this.form.submit()">
+
+                        <option value="">All Categories</option>
+
+                        @foreach($categories as $category)
+
+                            <option
+                                value="{{ $category->id }}"
+                                {{ request('category_id') == $category->id ? 'selected' : '' }}>
+
+                                {{ $category->category_name }}
+
+                            </option>
+
+                        @endforeach
+
+                    </select>
+                </div>
+
+                <div class="col-md-2 d-grid">
+                    <button class="btn btn-primary">
+                        Search
+                    </button>
+                </div>
+
+            </div>
+
+        </form>
+
         <div class="table-responsive">
 
             <table class="table align-middle">
@@ -52,7 +99,7 @@
 
                 <tbody>
 
-                    @foreach($subCategories as $subCategory)
+                    @forelse($subCategories as $subCategory)
 
                     <tr>
 
@@ -68,8 +115,8 @@
 
                         <td>
                             <strong>
-                            {{ $subCategory->sub_category_name }}
-                            </strong
+                                {{ $subCategory->sub_category_name }}
+                            </strong>
                         </td>
 
                         <td>
@@ -107,7 +154,15 @@
 
                     </tr>
 
-                    @endforeach
+                    @empty
+
+                    <tr>
+                        <td colspan="5" class="text-center py-4">
+                            No Sub Categories Found.
+                        </td>
+                    </tr>
+
+                    @endforelse
 
                 </tbody>
 

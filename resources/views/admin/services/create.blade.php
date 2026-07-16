@@ -73,7 +73,7 @@
 
             <div class="mb-4">
                 <label class="form-label fw-semibold">
-                    Service Name
+                    Service Type
                 </label>
 
                 <input type="text"
