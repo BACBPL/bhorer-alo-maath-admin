@@ -22,48 +22,36 @@
             <div class="row">
 
                 <div class="col-md-6 mb-4">
-                    <label class="form-label fw-semibold">
-                        Category
-                    </label>
+                    <label class="form-label fw-semibold">Category</label>
 
                     <select name="category_id"
                             class="form-select premium-input"
                             required>
 
-                        <option value="">
-                            Select Category
-                        </option>
+                        <option value="">Select Category</option>
 
                         @foreach($categories as $category)
-
                             <option value="{{ $category->id }}">
                                 {{ $category->category_name }}
                             </option>
-
                         @endforeach
 
                     </select>
                 </div>
 
                 <div class="col-md-6 mb-4">
-                    <label class="form-label fw-semibold">
-                        Sub Category
-                    </label>
+                    <label class="form-label fw-semibold">Sub Category</label>
 
                     <select name="sub_category_id"
                             class="form-select premium-input"
                             required>
 
-                        <option value="">
-                            Select Sub Category
-                        </option>
+                        <option value="">Select Sub Category</option>
 
                         @foreach($subCategories as $subCategory)
-
                             <option value="{{ $subCategory->id }}">
                                 {{ $subCategory->sub_category_name }}
                             </option>
-
                         @endforeach
 
                     </select>
@@ -72,21 +60,18 @@
             </div>
 
             <div class="mb-4">
-                <label class="form-label fw-semibold">
-                    Service Type
-                </label>
+                <label class="form-label fw-semibold">Service Type</label>
 
-                <input type="text"
-                       name="service_name"
-                       class="form-control premium-input"
-                       placeholder="Enter service name"
-                       required>
+                <select name="service_type" class="form-select premium-input" required>
+                    <option value="">Select Service Type</option>
+                    <option value="Rent">Rent</option>
+                    <option value="Repair">Repair</option>
+                    <option value="AMC">AMC</option>
+                </select>
             </div>
 
             <div class="mb-4">
-                <label class="form-label fw-semibold">
-                    Description
-                </label>
+                <label class="form-label fw-semibold">Description</label>
 
                 <textarea name="description"
                           rows="5"
@@ -97,9 +82,7 @@
             <div class="row">
 
                 <div class="col-md-6 mb-4">
-                    <label class="form-label fw-semibold">
-                        Charges (₹)
-                    </label>
+                    <label class="form-label fw-semibold">Charges (₹)</label>
 
                     <input type="number"
                            name="price"
@@ -109,20 +92,13 @@
                 </div>
 
                 <div class="col-md-6 mb-4">
-                    <label class="form-label fw-semibold">
-                        Status
-                    </label>
+                    <label class="form-label fw-semibold">Status</label>
 
                     <select name="status"
                             class="form-select premium-input">
 
-                        <option value="Active">
-                            Active
-                        </option>
-
-                        <option value="Inactive">
-                            Inactive
-                        </option>
+                        <option value="Active">Active</option>
+                        <option value="Inactive">Inactive</option>
 
                     </select>
                 </div>
@@ -140,13 +116,8 @@
                     <select name="is_featured"
                             class="form-select premium-input">
 
-                        <option value="0">
-                            No
-                        </option>
-
-                        <option value="1">
-                            Yes
-                        </option>
+                        <option value="0">No</option>
+                        <option value="1">Yes</option>
 
                     </select>
 
@@ -161,13 +132,8 @@
                     <select name="is_most_booked"
                             class="form-select premium-input">
 
-                        <option value="0">
-                            No
-                        </option>
-
-                        <option value="1">
-                            Yes
-                        </option>
+                        <option value="0">No</option>
+                        <option value="1">Yes</option>
 
                     </select>
 

@@ -77,13 +77,28 @@
                     Service Type
                 </label>
 
-                <input
-                    type="text"
-                    name="service_name"
-                    class="form-control premium-input"
-                    value="{{ $service->service_name }}"
+                <select
+                    name="service_type"
+                    class="form-select premium-input"
                     required
                 >
+                    <option value="">Select Service Type</option>
+
+                    <option value="Rent"
+                        {{ $service->service_type == 'Rent' ? 'selected' : '' }}>
+                        Rent
+                    </option>
+
+                    <option value="Repair"
+                        {{ $service->service_type == 'Repair' ? 'selected' : '' }}>
+                        Repair
+                    </option>
+
+                    <option value="AMC"
+                        {{ $service->service_type == 'AMC' ? 'selected' : '' }}>
+                        AMC
+                    </option>
+                </select>
             </div>
 
             <div class="mb-4">

@@ -45,16 +45,16 @@ class ServiceController extends Controller
         }
 
         Service::create([
-        'category_id'     => $request->category_id,
-        'sub_category_id' => $request->sub_category_id,
-        'service_name'    => $request->service_name,
-        'description'     => $request->description,
-        'price'           => $request->price,
-        'image'           => $imageName,
-        'status'          => $request->status,
-        'is_featured'     => $request->has('is_featured') ? 1 : 0,
-        'is_most_booked'  => $request->has('is_most_booked') ? 1 : 0,
-    ]);
+            'category_id'     => $request->category_id,
+            'sub_category_id' => $request->sub_category_id,
+            'service_type'    => $request->service_type,
+            'description'     => $request->description,
+            'price'           => $request->price,
+            'image'           => $imageName,
+            'status'          => $request->status,
+            'is_featured'     => $request->is_featured,
+            'is_most_booked'  => $request->is_most_booked,
+        ]);
 
         return redirect('/admin/services')
                 ->with('success', 'Service Added Successfully');
@@ -82,7 +82,7 @@ class ServiceController extends Controller
         $data = [
         'category_id'     => $request->category_id,
         'sub_category_id' => $request->sub_category_id,
-        'service_name'    => $request->service_name,
+        'service_type'    => $request->service_type,
         'description'     => $request->description,
         'price'           => $request->price,
         'status'          => $request->status,
@@ -154,8 +154,6 @@ class ServiceController extends Controller
         LaptopService::create([
 
             'service_type' => $request->service_type,
-
-            'service_name' => $request->service_name,
 
             'description' => $request->description,
 
