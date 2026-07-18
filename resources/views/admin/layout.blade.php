@@ -487,7 +487,7 @@
             Dashboard
         </a>
 
-        <div class="menu-heading">BUSINESS</div>
+        <div class="menu-heading">Service Management</div>
 
         <a href="/admin/categories"
             class="{{ request()->is('admin/categories*') ? 'active' : '' }}">
@@ -504,8 +504,15 @@
         <a href="/admin/services"
             class="{{ request()->is('admin/services*') ? 'active' : '' }}">
             <i class="bi bi-tools me-2"></i>
-            Services
+            Services Type
         </a>
+
+        <li class="nav-item">
+            <a href="/admin/items" class="nav-link">
+                <i class="bi bi-box-seam"></i>
+                <span>Items</span>
+            </a>
+        </li>
 
         <p class="menu-heading mt-4">
     LAPTOP MANAGEMENT

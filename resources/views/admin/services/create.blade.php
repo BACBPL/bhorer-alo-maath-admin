@@ -24,9 +24,7 @@
                 <div class="col-md-6 mb-4">
                     <label class="form-label fw-semibold">Category</label>
 
-                    <select name="category_id"
-                            class="form-select premium-input"
-                            required>
+                    <select name="category_id" id="category_id" class="form-select">
 
                         <option value="">Select Category</option>
 
@@ -42,18 +40,16 @@
                 <div class="col-md-6 mb-4">
                     <label class="form-label fw-semibold">Sub Category</label>
 
-                    <select name="sub_category_id"
-                            class="form-select premium-input"
-                            required>
-
+                    <select name="sub_category_id" id="sub_category_id" class="form-select">
                         <option value="">Select Sub Category</option>
 
                         @foreach($subCategories as $subCategory)
-                            <option value="{{ $subCategory->id }}">
+                            <option
+                                value="{{ $subCategory->id }}"
+                                data-category="{{ $subCategory->category_id }}">
                                 {{ $subCategory->sub_category_name }}
                             </option>
                         @endforeach
-
                     </select>
                 </div>
 
@@ -172,5 +168,33 @@
     </div>
 
 </div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const category = document.getElementById("category_id");
+    const subCategory = document.getElementById("sub_category_id");
+
+    category.addEventListener("change", function () {
+
+        let categoryId = this.value;
+
+        Array.from(subCategory.options).forEach(function(option){
+
+            if(option.value==""){
+                option.hidden = false;
+                return;
+            }
+
+            option.hidden = option.dataset.category != categoryId;
+        });
+
+        subCategory.value="";
+    });
+
+    category.dispatchEvent(new Event("change"));
+
+});
+</script>
 
 @endsection

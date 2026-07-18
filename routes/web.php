@@ -18,6 +18,7 @@ use App\Http\Controllers\LaptopServiceController;
 use App\Http\Controllers\LaptopServiceCategoryController;
 use App\Http\Controllers\LaptopBrandController;
 use App\Http\Controllers\LaptopModelController;
+use App\Http\Controllers\ItemController;
 
 Route::get('/admin', function () {
     return redirect('/admin/login');
@@ -136,3 +137,16 @@ Route::get('/admin/payments', [PaymentController::class, 'payments']);
 Route::get('/admin/logout', [AdminController::class, 'logout']);
 
 });
+
+
+Route::get('/admin/items', [ItemController::class,'index']);
+
+Route::get('/admin/items/create', [ItemController::class,'create']);
+
+Route::post('/admin/items/store', [ItemController::class,'store']);
+
+Route::get('/admin/items/edit/{id}', [ItemController::class,'edit']);
+
+Route::post('/admin/items/update/{id}', [ItemController::class,'update']);
+
+Route::get('/admin/items/delete/{id}', [ItemController::class,'destroy']);
