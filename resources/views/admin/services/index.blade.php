@@ -34,6 +34,72 @@
 
         @endif
 
+
+        <form action="/admin/services" method="GET" class="row mb-4">
+
+            <div class="col-md-4">
+
+                <input type="text"
+                    name="search"
+                    class="form-control"
+                    placeholder="Search Service Type..."
+                    value="{{ request('search') }}">
+
+            </div>
+
+            <div class="col-md-3">
+
+                <select name="category_id"
+                        class="form-select">
+
+                    <option value="">All Categories</option>
+
+                    @foreach($categories as $category)
+
+                        <option value="{{ $category->id }}"
+                            {{ request('category_id')==$category->id ? 'selected':'' }}>
+
+                            {{ $category->category_name }}
+
+                        </option>
+
+                    @endforeach
+
+                </select>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <select name="status"
+                        class="form-select">
+
+                    <option value="">All Status</option>
+
+                    <option value="Active"
+                    {{ request('status')=='Active'?'selected':'' }}>
+                        Active
+                    </option>
+
+                    <option value="Inactive"
+                    {{ request('status')=='Inactive'?'selected':'' }}>
+                        Inactive
+                    </option>
+
+                </select>
+
+            </div>
+
+            <div class="col-md-2">
+
+                <button class="btn btn-primary w-100">
+                    Search
+                </button>
+
+            </div>
+
+        </form>
+
         <div class="table-responsive">
 
             <table class="table align-middle">

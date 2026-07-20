@@ -28,8 +28,9 @@ class SubCategoryController extends Controller
 
         $subCategories = $query->get();
 
-        $categories = Category::where('status', 'Active')->get();
-
+        $categories = Category::where('status', 'Active')
+    ->where('category_name', 'Service')
+    ->get();
         return view(
             'admin.subcategories.index',
             compact('subCategories', 'categories')
@@ -38,7 +39,9 @@ class SubCategoryController extends Controller
 
     public function createSubCategory()
     {
-        $categories = Category::where('status', 'Active')->get();
+        $categories = Category::where('status', 'Active')
+    ->where('category_name', 'Service')
+    ->get();
 
         return view('admin.subcategories.create', compact('categories'));
     }
@@ -59,7 +62,9 @@ class SubCategoryController extends Controller
     {
         $subCategory = SubCategory::findOrFail($id);
 
-        $categories = Category::where('status', 'Active')->get();
+        $categories = Category::where('status', 'Active')
+    ->where('category_name', 'Service')
+    ->get();
 
         return view(
             'admin.subcategories.edit',

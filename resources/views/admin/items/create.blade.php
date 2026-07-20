@@ -19,9 +19,37 @@
 
             <div class="row">
 
+                <!-- Category -->
                 <div class="col-md-6 mb-3">
+
                     <label class="form-label fw-semibold">
-                        Item Name <span class="text-danger">*</span>
+                        Category
+                    </label>
+
+                    <select name="category_id"
+                            id="category_id"
+                            class="form-select"
+                            required>
+
+                        <option value="">Select Category</option>
+
+                        @foreach($categories as $category)
+
+                            <option value="{{ $category->id }}">
+                                {{ $category->category_name }}
+                            </option>
+
+                        @endforeach
+
+                    </select>
+
+                </div>
+
+                <!-- Item Name -->
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label fw-semibold">
+                        Item Name
                     </label>
 
                     <input type="text"
@@ -29,17 +57,18 @@
                            class="form-control"
                            placeholder="Enter Item Name"
                            required>
+
                 </div>
 
+                <!-- Status -->
                 <div class="col-md-6 mb-3">
 
                     <label class="form-label fw-semibold">
-                        Status <span class="text-danger">*</span>
+                        Status
                     </label>
 
                     <select name="status"
-                            class="form-select"
-                            required>
+                            class="form-select">
 
                         <option value="Active">
                             Active
@@ -57,18 +86,13 @@
 
             <div class="mt-4">
 
-                <button type="submit"
-                        class="btn btn-primary px-4">
-
+                <button class="btn btn-primary px-4">
                     Save Item
-
                 </button>
 
                 <a href="/admin/items"
                    class="btn btn-secondary px-4">
-
                     Cancel
-
                 </a>
 
             </div>

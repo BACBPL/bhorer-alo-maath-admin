@@ -54,6 +54,7 @@ Route::post('/admin/services/store', [ServiceController::class, 'storeService'])
 Route::get('/admin/services/edit/{id}', [ServiceController::class, 'editService']);
 Route::post('/admin/services/update/{id}', [ServiceController::class, 'updateService']);
 Route::get('/admin/services/delete/{id}', [ServiceController::class, 'deleteService']);
+Route::get('/admin/get-services/{subcategory}', [ServiceController::class, 'getServices']);
 
 // Laptop Services
 Route::get('/admin/laptop-services', [LaptopServiceController::class, 'index']);
@@ -138,15 +139,10 @@ Route::get('/admin/logout', [AdminController::class, 'logout']);
 
 });
 
-
+// Items
 Route::get('/admin/items', [ItemController::class,'index']);
-
 Route::get('/admin/items/create', [ItemController::class,'create']);
-
 Route::post('/admin/items/store', [ItemController::class,'store']);
-
 Route::get('/admin/items/edit/{id}', [ItemController::class,'edit']);
-
 Route::post('/admin/items/update/{id}', [ItemController::class,'update']);
-
 Route::get('/admin/items/delete/{id}', [ItemController::class,'destroy']);

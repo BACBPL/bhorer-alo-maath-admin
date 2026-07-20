@@ -4,31 +4,46 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Item;
+use App\Models\Category;
+use App\Models\SubCategory;
+use App\Models\Service;
 
 class ItemController extends Controller
 {
     public function index()
     {
-        $items = Item::latest()->get();
+        $items = Item::with([
+            'category',
+            'subCategory',
+            'service'
+        ])->orderBy('id')->get();
 
         return view('admin.items.index', compact('items'));
     }
 
     public function create()
     {
-        return view('admin.items.create');
+        $categories = Category::where('status', 'Active')->get();
+
+        $subCategories = SubCategory::where('status', 'Active')->get();
+
+        $services = Service::where('status', 'Active')->get();
+
+        return view('admin.items.create', compact(
+            'categories',
+            'subCategories',
+            'services'
+        ));
     }
 
     public function store(Request $request)
     {
-        $request->validate([
-            'item_name' => 'required|string|max:255',
-            'status'    => 'required',
-        ]);
-
         Item::create([
-            'item_name' => $request->item_name,
-            'status'    => $request->status,
+
+            'category_id'     => $request->category_id,
+            'item_name'   => $request->item_name,
+            'status'          => $request->status,
+
         ]);
 
         return redirect('/admin/items')
@@ -39,21 +54,30 @@ class ItemController extends Controller
     {
         $item = Item::findOrFail($id);
 
-        return view('admin.items.edit', compact('item'));
+        $categories = Category::where('status', 'Active')->get();
+
+        $subCategories = SubCategory::where('status', 'Active')->get();
+
+        $services = Service::where('status', 'Active')->get();
+
+        return view('admin.items.edit', compact(
+            'item',
+            'categories',
+            'subCategories',
+            'services'
+        ));
     }
 
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'item_name' => 'required|string|max:255',
-            'status'    => 'required',
-        ]);
-
         $item = Item::findOrFail($id);
 
         $item->update([
-            'item_name' => $request->item_name,
-            'status'    => $request->status,
+
+            'category_id'     => $request->category_id,
+            'item_name'       => $request->item_name,
+            'status'          => $request->status,
+
         ]);
 
         return redirect('/admin/items')

@@ -48,28 +48,7 @@
                         value="{{ request('search') }}">
                 </div>
 
-                <div class="col-md-4">
-                    <select
-                        name="category_id"
-                        class="form-select"
-                        onchange="this.form.submit()">
-
-                        <option value="">All Categories</option>
-
-                        @foreach($categories as $category)
-
-                            <option
-                                value="{{ $category->id }}"
-                                {{ request('category_id') == $category->id ? 'selected' : '' }}>
-
-                                {{ $category->category_name }}
-
-                            </option>
-
-                        @endforeach
-
-                    </select>
-                </div>
+                
 
                 <div class="col-md-2 d-grid">
                     <button class="btn btn-primary">

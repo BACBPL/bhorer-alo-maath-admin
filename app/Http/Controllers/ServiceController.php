@@ -11,11 +11,33 @@ use App\Models\LaptopServiceCategory;
 
 class ServiceController extends Controller
 {
-    public function services()
+    public function services(Request $request)
     {
-        $services = Service::with(['category', 'subCategory'])->get();
+        $query = Service::with(['category','subCategory']);
 
-        return view('admin.services.index', compact('services'));
+        if($request->filled('search'))
+        {
+            $query->where('service_type','LIKE','%'.$request->search.'%');
+        }
+
+        if($request->filled('category_id'))
+        {
+            $query->where('category_id',$request->category_id);
+        }
+
+        if($request->filled('status'))
+        {
+            $query->where('status',$request->status);
+        }
+
+        $services = $query->latest()->get();
+
+        $categories = Category::where('status','Active')->get();
+
+        return view(
+            'admin.services.index',
+            compact('services','categories')
+        );
     }
 
     public function createService()
@@ -169,6 +191,18 @@ class ServiceController extends Controller
 
         return redirect('/admin/laptop-services')
                 ->with('success', 'Laptop Service Added Successfully');
+    }
+
+    public function getServices($subcategory)
+    {
+        $services = Service::where(
+            'sub_category_id',
+            $subcategory
+        )
+        ->where('status','Active')
+        ->get();
+
+        return response()->json($services);
     }
 
     public function laptopServiceCategories()

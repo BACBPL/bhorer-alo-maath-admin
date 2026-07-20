@@ -34,14 +34,15 @@
 
         <div class="table-responsive">
 
-            <table class="table align-middle">
+            <table class="table table-hover align-middle">
 
-                <thead>
+                <thead class="table-light">
 
-                    <tr class="table-light">
-                        <th>SL.No</th>
+                    <tr>
+                        <th width="80">SL.No</th>
                         <th>Item Name</th>
-                        <th>Status</th>
+                        <th>Category</th>
+                        <th width="120">Status</th>
                         <th width="180">Action</th>
                     </tr>
 
@@ -49,64 +50,68 @@
 
                 <tbody>
 
-                @forelse($items as $item)
+                    @forelse($items as $item)
 
-                    <tr>
+                        <tr>
 
-                        <td>
-                            <strong>{{ $loop->iteration }}</strong>
-                        </td>
+                            <td>
+                                {{ $loop->iteration }}
+                            </td>
 
-                        <td class="fw-bold">
-                            {{ $item->item_name }}
-                        </td>
+                            <td class="fw-bold">
+                                {{ $item->item_name }}
+                            </td>
 
-                        <td>
+                            <td>
+                                {{ $item->category->category_name ?? '-' }}
+                            </td>
 
-                            @if($item->status=='Active')
+                            <td>
 
-                                <span class="badge bg-success px-3 py-2">
-                                    Active
-                                </span>
+                                @if($item->status == 'Active')
 
-                            @else
+                                    <span class="badge bg-success px-3 py-2">
+                                        Active
+                                    </span>
 
-                                <span class="badge bg-danger px-3 py-2">
-                                    Inactive
-                                </span>
+                                @else
 
-                            @endif
+                                    <span class="badge bg-danger px-3 py-2">
+                                        Inactive
+                                    </span>
 
-                        </td>
+                                @endif
 
-                        <td>
+                            </td>
 
-                            <a href="/admin/items/edit/{{ $item->id }}"
-                               class="btn btn-warning btn-sm rounded-3">
-                                Edit
-                            </a>
+                            <td>
 
-                            <a href="/admin/items/delete/{{ $item->id }}"
-                               class="btn btn-danger btn-sm rounded-3"
-                               onclick="return confirm('Are you sure?')">
-                                Delete
-                            </a>
+                                <a href="/admin/items/edit/{{ $item->id }}"
+                                   class="btn btn-warning btn-sm">
+                                    Edit
+                                </a>
 
-                        </td>
+                                <a href="/admin/items/delete/{{ $item->id }}"
+                                   class="btn btn-danger btn-sm"
+                                   onclick="return confirm('Are you sure you want to delete this item?')">
+                                    Delete
+                                </a>
 
-                    </tr>
+                            </td>
 
-                @empty
+                        </tr>
 
-                    <tr>
+                    @empty
 
-                        <td colspan="4" class="text-center text-muted py-4">
-                            No Items Found
-                        </td>
+                        <tr>
 
-                    </tr>
+                            <td colspan="5" class="text-center py-4 text-muted">
+                                No Items Found
+                            </td>
 
-                @endforelse
+                        </tr>
+
+                    @endforelse
 
                 </tbody>
 

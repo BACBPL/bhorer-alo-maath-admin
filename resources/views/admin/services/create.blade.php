@@ -56,14 +56,25 @@
             </div>
 
             <div class="mb-4">
-                <label class="form-label fw-semibold">Service Type</label>
 
-                <select name="service_type" class="form-select premium-input" required>
+                <label class="form-label fw-semibold">
+                    Service Type
+                </label>
+
+                <select name="service_type"
+                        class="form-select premium-input"
+                        required>
+
                     <option value="">Select Service Type</option>
-                    <option value="Rent">Rent</option>
+
                     <option value="Repair">Repair</option>
+
+                    <option value="Rent">Rent</option>
+
                     <option value="AMC">AMC</option>
+
                 </select>
+
             </div>
 
             <div class="mb-4">
