@@ -22,54 +22,93 @@
 
             @csrf
 
-            <div class="mb-4">
+            <div class="col-md-6 mb-4">
+
                 <label class="form-label fw-semibold">
                     Category
                 </label>
 
                 <select
                     name="category_id"
-                    class="form-select premium-input"
-                >
-                    <option value="">-- Select Category --</option>
+                    id="category_id"
+                    class="form-select premium-input">
+
+                    <option value="">Select Category</option>
 
                     @foreach($categories as $category)
 
-                    <option
-                        value="{{ $category->id }}"
-                        {{ $service->category_id == $category->id ? 'selected' : '' }}
-                    >
-                        {{ $category->category_name }}
-                    </option>
+                        <option
+                            value="{{ $category->id }}"
+                            {{ $service->category_id == $category->id ? 'selected' : '' }}>
+
+                            {{ $category->category_name }}
+
+                        </option>
 
                     @endforeach
 
                 </select>
+
             </div>
 
-            <div class="mb-4">
+            <div class="col-md-6 mb-4">
+
                 <label class="form-label fw-semibold">
                     Sub Category
                 </label>
 
                 <select
                     name="sub_category_id"
-                    class="form-select premium-input"
-                >
-                    <option value="">-- Select Sub Category --</option>
+                    id="sub_category_id"
+                    class="form-select premium-input">
+
+                    <option value="">Select Sub Category</option>
 
                     @foreach($subCategories as $subCategory)
 
-                    <option
-                        value="{{ $subCategory->id }}"
-                        {{ $service->sub_category_id == $subCategory->id ? 'selected' : '' }}
-                    >
-                        {{ $subCategory->sub_category_name }}
-                    </option>
+                        <option
+                            value="{{ $subCategory->id }}"
+                            data-category="{{ $subCategory->category_id }}"
+                            {{ $service->sub_category_id == $subCategory->id ? 'selected' : '' }}>
+
+                            {{ $subCategory->sub_category_name }}
+
+                        </option>
 
                     @endforeach
 
                 </select>
+
+            </div>
+            
+            <div class="col-md-6 mb-4">
+
+                <label class="form-label fw-semibold">
+                    Item
+                </label>
+
+                <select
+                    name="item_id"
+                    id="item_id"
+                    class="form-select premium-input">
+
+                    <option value="">Select Item</option>
+
+                    @foreach($items as $item)
+
+                        <option
+                            value="{{ $item->id }}"
+                            data-subcategory="{{ $item->sub_category_id }}"
+                            {{ $service->item_id == $item->id ? 'selected' : '' }}>
+
+                            {{ $item->item_name }}
+
+                        </option>
+
+                    @endforeach
+
+                </select>
+
             </div>
 
             <div class="mb-4">
@@ -154,40 +193,40 @@
             </div>
 
             <div class="mb-4">
-    <label class="form-label fw-semibold">
-        Featured Service
-    </label>
+                <label class="form-label fw-semibold">
+                    Featured Service
+                </label>
 
-    <select name="is_featured" class="form-select premium-input">
-        <option value="0"
-            {{ $service->is_featured == 0 ? 'selected' : '' }}>
-            No
-        </option>
+                <select name="is_featured" class="form-select premium-input">
+                    <option value="0"
+                        {{ $service->is_featured == 0 ? 'selected' : '' }}>
+                        No
+                    </option>
 
-        <option value="1"
-            {{ $service->is_featured == 1 ? 'selected' : '' }}>
-            Yes
-        </option>
-    </select>
-</div>
+                    <option value="1"
+                        {{ $service->is_featured == 1 ? 'selected' : '' }}>
+                        Yes
+                    </option>
+                </select>
+            </div>
 
-<div class="mb-4">
-    <label class="form-label fw-semibold">
-        Most Booked Service
-    </label>
+            <div class="mb-4">
+                <label class="form-label fw-semibold">
+                    Most Booked Service
+                </label>
 
-    <select name="is_most_booked" class="form-select premium-input">
-        <option value="0"
-            {{ $service->is_most_booked == 0 ? 'selected' : '' }}>
-            No
-        </option>
+                <select name="is_most_booked" class="form-select premium-input">
+                    <option value="0"
+                        {{ $service->is_most_booked == 0 ? 'selected' : '' }}>
+                        No
+                    </option>
 
-        <option value="1"
-            {{ $service->is_most_booked == 1 ? 'selected' : '' }}>
-            Yes
-        </option>
-    </select>
-</div>
+                    <option value="1"
+                        {{ $service->is_most_booked == 1 ? 'selected' : '' }}>
+                        Yes
+                    </option>
+                </select>
+            </div>
 
             <div class="mb-4">
 

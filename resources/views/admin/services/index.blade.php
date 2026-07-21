@@ -110,6 +110,7 @@
 
                         <th>SL.No</th>
                         <th>Category</th>
+                        <th>Item</th>
                         <th>Sub Category</th>
                         <th>Service Type</th>
                         <th>Charges</th>
@@ -133,6 +134,8 @@
                         <td class="fw-bold">
                             {{ $service->category->category_name ?? '-' }}
                         </td>
+
+                        <td>{{ $service->item->item_name ?? '-' }}</td>
 
                         <td class="fw-bold">
                             {{ $service->subCategory->sub_category_name ?? '-' }}

@@ -23,16 +23,21 @@ class ItemController extends Controller
 
     public function create()
     {
-        $categories = Category::where('status', 'Active')->get();
+        $categories = Category::where('status','Active')->get();
 
-        $subCategories = SubCategory::where('status', 'Active')->get();
+        $subCategories = SubCategory::where('status','Active')->get();
 
-        $services = Service::where('status', 'Active')->get();
+        $services = Service::where('status','Active')->get();
+
+        $items = Item::with('subCategory')
+                    ->where('status','Active')
+                    ->get();
 
         return view('admin.items.create', compact(
             'categories',
             'subCategories',
-            'services'
+            'services',
+            'items'
         ));
     }
 
@@ -40,9 +45,10 @@ class ItemController extends Controller
     {
         Item::create([
 
-            'category_id'     => $request->category_id,
-            'item_name'   => $request->item_name,
-            'status'          => $request->status,
+            'category_id'=>$request->category_id,
+            'sub_category_id'=>$request->sub_category_id,
+            'item_name'=>$request->item_name,
+            'status'=>$request->status,
 
         ]);
 
@@ -74,11 +80,15 @@ class ItemController extends Controller
 
         $item->update([
 
-            'category_id'     => $request->category_id,
-            'item_name'       => $request->item_name,
-            'status'          => $request->status,
+        'category_id'=>$request->category_id,
 
-        ]);
+        'sub_category_id'=>$request->sub_category_id,
+
+        'item_name'=>$request->item_name,
+
+        'status'=>$request->status,
+
+    ]);
 
         return redirect('/admin/items')
             ->with('success', 'Item Updated Successfully');

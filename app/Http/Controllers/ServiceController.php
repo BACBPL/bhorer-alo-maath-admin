@@ -8,12 +8,17 @@ use App\Models\SubCategory;
 use App\Models\Service;
 use App\Models\LaptopService;
 use App\Models\LaptopServiceCategory;
+use App\Models\Item;
 
 class ServiceController extends Controller
 {
     public function services(Request $request)
     {
-        $query = Service::with(['category','subCategory']);
+        $query = Service::with([
+        'category',
+        'subCategory',
+        'item'
+    ]);
 
         if($request->filled('search'))
         {
@@ -46,9 +51,12 @@ class ServiceController extends Controller
 
         $subCategories = SubCategory::where('status', 'Active')->get();
 
+        $items = Item::where('status', 'Active')->get();
+
         return view('admin.services.create', compact(
             'categories',
-            'subCategories'
+            'subCategories',
+            'items'
         ));
     }
 
@@ -69,6 +77,7 @@ class ServiceController extends Controller
         Service::create([
             'category_id'     => $request->category_id,
             'sub_category_id' => $request->sub_category_id,
+            'item_id'         => $request->item_id,
             'service_type'    => $request->service_type,
             'description'     => $request->description,
             'price'           => $request->price,
@@ -89,12 +98,14 @@ class ServiceController extends Controller
         $categories = Category::where('status', 'Active')->get();
 
         $subCategories = SubCategory::where('status', 'Active')->get();
+        $items = Item::where('status', 'Active')->get();
 
         return view('admin.services.edit', compact(
-            'service',
-            'categories',
-            'subCategories'
-        ));
+    'service',
+    'categories',
+    'subCategories',
+    'items'
+));
     }
 
     public function updateService(Request $request, $id)
@@ -104,6 +115,7 @@ class ServiceController extends Controller
         $data = [
         'category_id'     => $request->category_id,
         'sub_category_id' => $request->sub_category_id,
+        'item_id' => $request->item_id,
         'service_type'    => $request->service_type,
         'description'     => $request->description,
         'price'           => $request->price,

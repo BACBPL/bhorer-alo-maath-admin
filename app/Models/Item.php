@@ -7,10 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Item extends Model
 {
     protected $fillable = [
-        'category_id',
-        'item_name',
-        'status',
-    ];
+    'category_id',
+    'sub_category_id',
+    'item_name',
+    'status',
+];
 
     public function category()
     {
@@ -19,7 +20,7 @@ class Item extends Model
 
     public function subCategory()
     {
-        return $this->belongsTo(SubCategory::class);
+        return $this->belongsTo(SubCategory::class,'sub_category_id');
     }
 
     public function service()

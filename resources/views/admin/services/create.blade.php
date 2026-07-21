@@ -53,6 +53,36 @@
                     </select>
                 </div>
 
+                <div class="col-md-6 mb-4">
+
+                <label class="form-label fw-semibold">
+                    Item
+                </label>
+
+                <select name="item_id"
+                        id="item_id"
+                        class="form-select">
+
+                    <option value="">
+                        Select Item
+                    </option>
+
+                    @foreach($items as $item)
+
+                        <option
+                            value="{{ $item->id }}"
+                            data-subcategory="{{ $item->sub_category_id }}">
+
+                            {{ $item->item_name }}
+
+                        </option>
+
+                    @endforeach
+
+                </select>
+
+            </div>
+
             </div>
 
             <div class="mb-4">
@@ -185,25 +215,65 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const category = document.getElementById("category_id");
     const subCategory = document.getElementById("sub_category_id");
+    const item = document.getElementById("item_id");
 
-    category.addEventListener("change", function () {
+    function filterSubCategories() {
 
-        let categoryId = this.value;
+        const categoryId = category.value;
 
         Array.from(subCategory.options).forEach(function(option){
 
-            if(option.value==""){
+            if(option.value === ""){
                 option.hidden = false;
                 return;
             }
 
             option.hidden = option.dataset.category != categoryId;
+
         });
 
-        subCategory.value="";
+    }
+
+    function filterItems() {
+
+        const subCategoryId = subCategory.value;
+
+        Array.from(item.options).forEach(function(option){
+
+            if(option.value === ""){
+                option.hidden = false;
+                return;
+            }
+
+            option.hidden = option.dataset.subcategory != subCategoryId;
+
+        });
+
+    }
+
+    category.addEventListener("change", function(){
+
+        filterSubCategories();
+
+        subCategory.value = "";
+
+        filterItems();
+
+        item.value = "";
+
     });
 
-    category.dispatchEvent(new Event("change"));
+    subCategory.addEventListener("change", function(){
+
+        filterItems();
+
+        item.value = "";
+
+    });
+
+    filterSubCategories();
+
+    filterItems();
 
 });
 </script>
